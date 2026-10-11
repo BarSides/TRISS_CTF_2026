@@ -1,30 +1,42 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Rev Beginner (TBD)"
-author: "TBD"
+name: "Skip the Line"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Rev"
 description: |-
-  TBD
+  The line for the Phantom's Revenge at Kennywood is 140 minutes long.
+  The fast pass kiosk next to it just wants a code, and somebody left a
+  copy of the kiosk program on a park laptop.
+
+  Find the fast pass code and print yourself a ride ticket.
+
+  The program runs on Linux (Kali, Ubuntu 22.04 or newer, or WSL).
+  Run `chmod +x skip_the_line` first.
+
+  Flag format: BarSides{...}
 value: 100
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{skipped_the_line_at_kennywood}
 
 tags:
   - beginner
+  - linux
+  - ghidra
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/skip_the_line
 
-hints: []
+hints:
+  - content: "Try `strings skip_the_line` first. Not every code you find there still works."
+    cost: 0
+  - content: "The real code is scrambled inside the program and unscrambled right before it is compared with what you type. Open the program in Ghidra and look at the function decode_fast_pass, or stop it in gdb right after that function runs."
+    cost: 10
+  - content: "Each byte of encoded_code is XORed with 0x5A. CyberChef's From Hex and XOR recipes will unscramble it."
+    cost: 25
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
