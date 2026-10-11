@@ -1,30 +1,42 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Rev Intermediate (TBD)"
-author: "TBD"
+name: "Twirl the Towel"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Rev"
 description: |-
-  TBD
+  Somebody made a "smart" Terrible Towel that won't twirl until you
+  activate it, and the activation key is printed on a receipt nobody kept.
+  All we have is the activation program.
+
+  The program checks your key without ever storing it. Figure out what it
+  does to your key, run it backwards, and the key you recover is the flag.
+
+  The program runs on Linux (Kali, Ubuntu 22.04 or newer, or WSL).
+
+  Flag format: BarSides{...}
 value: 250
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{twirled_it_backwards_and_it_worked}
 
 tags:
   - intermediate
+  - linux
+  - ghidra
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/towel_check
 
-hints: []
+hints:
+  - content: "The program is stripped, so Ghidra will not show function names. Search for the string \"Activation failed\" and follow the reference back to the code that decides pass or fail."
+    cost: 0
+  - content: "Each character of your key goes through three steps (a rotate, an XOR and an add) and is compared with a 44-byte table. Undo them in reverse order: subtract, XOR, then rotate the other way."
+    cost: 25
+  - content: "Rotate left 3 (ROL 3) is undone by rotate right 3. CyberChef has Rotate right and XOR, but the add depends on the position, so a short Python loop is easiest."
+    cost: 50
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
