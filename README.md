@@ -26,6 +26,7 @@ Each category has a Beginner, Intermediate and Advanced slot:
 | AI | Off the Rails | Phish Sandwich | Inky Pro Max |
 | Cryptography | Steel City Shift | Bridge Keeper's Revenge | The Bridge Keeper's Last Note |
 | Forensics | TBD | TBD | TBD |
+| ICS | TBD | TBD | TBD |
 | Lockpicking | TBD | TBD | TBD |
 | Misc | TBD | TBD | TBD |
 | Rev | TBD | TBD | TBD |
