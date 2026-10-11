@@ -1,0 +1,10 @@
+# Local CyberChef for players, since online tools are unreachable at TRISS.
+# Populate with scripts/fetch-tools.sh before the event.
+services:
+  cyberchef:
+    image: nginx:1.27-alpine
+    ports:
+      - "8000:80"
+    volumes:
+      - ../../offline/tools/cyberchef:/usr/share/nginx/html:ro
+    restart: unless-stopped

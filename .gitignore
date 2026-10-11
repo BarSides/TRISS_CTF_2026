@@ -1,0 +1,4 @@
+# Saved images and downloaded tools are large; build them before the event, don't commit them.
+offline/
+.ctf/
+__pycache__/
