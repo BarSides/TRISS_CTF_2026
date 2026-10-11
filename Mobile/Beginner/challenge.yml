@@ -1,0 +1,40 @@
+# ctfcli challenge spec: https://github.com/CTFd/ctfcli
+name: "Parking Chair"
+author: "justinforbes"
+attribution: "BarSides"
+category: "Mobile"
+description: |-
+  After every big snow, Pittsburgh's one true law kicks in: shovel out a
+  spot, put a lawn chair in it, and it's yours. A guy on Dobson Street
+  turned the tradition into an Android app. The chair on spot #14 only
+  moves for the owner's code, and the receipt it prints when it moves is
+  exactly what you're after.
+
+  You don't need a phone. An .apk is just a zip of compiled Java, so open
+  it in jadx (jadx-gui) and read what the app is really doing.
+
+  Flag format: BarSides{...}
+value: 100
+type: standard
+
+flags:
+  - BarSides{the_chair_was_hardcoded}
+
+tags:
+  - beginner
+  - mobile
+  - android
+
+files:
+  - files/parking_chair.apk
+
+hints:
+  - content: "Open parking_chair.apk in jadx-gui (File > Open). Expand Source code > org.barsides.parkingchair and look at what the button calls."
+    cost: 0
+  - content: "MainActivity hands the code you type to ChairLock.isOwner(). Open ChairLock."
+    cost: 10
+
+requirements: []
+
+state: visible
+version: "1.0"
