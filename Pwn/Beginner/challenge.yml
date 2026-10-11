@@ -1,0 +1,46 @@
+# ctfcli challenge spec: https://github.com/CTFd/ctfcli
+name: "Will Call"
+author: "justinforbes"
+attribution: "BarSides"
+category: "Pwn"
+description: |-
+  The will-call window at Acrisure Stadium hands out general-admission
+  tickets to anyone, but the VIP field passes are locked behind the guest
+  list. The clerk's program reads the name on your reservation into a small
+  buffer, then checks a "VIP" flag sitting right next to it before printing
+  the good stuff. Give them a name that is a little too long and see where
+  the extra letters land.
+
+  The exact binary the server runs is attached, along with its source.
+
+  Connect with: nc EVENT_HOST 8012
+
+  Flag format: BarSides{...}
+value: 100
+type: standard
+
+# Raw TCP line service (socat), not a web page.
+connection_info: EVENT_HOST 8012
+
+flags:
+  - BarSides{overflowed_onto_the_vip_list}
+
+tags:
+  - beginner
+  - pwn
+  - buffer-overflow
+
+files:
+  - files/will_call
+  - files/will_call.c
+
+hints:
+  - content: "The name goes into a 32-byte buffer and the VIP flag sits right after it. What happens if you type more than 32 characters?"
+    cost: 0
+  - content: "Anything past the 32nd byte lands on the VIP flag. Send 40 characters: python3 -c \"print('A'*40)\" | nc EVENT_HOST 8012"
+    cost: 10
+
+requirements: []
+
+state: visible
+version: "1.0"
