@@ -1,30 +1,38 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Web Intermediate (TBD)"
-author: "TBD"
+name: "446 Bridges"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Web"
 description: |-
-  TBD
+  Pittsburgh has 446 bridges, and somebody built a website to search them.
+  The bridge crew keeps its private notes in the same database, including the
+  gate code for a maintenance catwalk. The search box only shows bridges...
+  or does it?
+
+  Flag format: BarSides{...}
 value: 250
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
+connection_info: http://EVENT_HOST:8005
 
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{union_select_the_city_of_bridges}
 
 tags:
   - intermediate
+  - sql-injection
 
-# Paths relative to this folder, attached as player downloads.
 files: []
 
-hints: []
+hints:
+  - content: "Search for a single quote ( ' ) and read the error. Your search text is being pasted straight into a SQL query."
+    cost: 0
+  - content: "The results table has three columns, so a UNION SELECT needs three columns too. SQLite lists every table, and the SQL that created it, in a table called sqlite_master. End your input with -- to comment out the rest of the query."
+    cost: 25
+  - content: "' UNION SELECT name, sql, type FROM sqlite_master--"
+    cost: 50
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
