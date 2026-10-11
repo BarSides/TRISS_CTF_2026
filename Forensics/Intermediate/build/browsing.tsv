@@ -1,0 +1,44 @@
+# minute	visit_type	url	title
+# Day 1, Mon 2026-09-28 from 08:00 local (UTC-4). visit_type: 1 link, 2 typed, 3 bookmark, 5 redirect
+0	2	https://intranet.signalco.local/	Steel City Signal Co. Intranet
+1	1	https://intranet.signalco.local/news	Company News
+3	3	https://mail.signalco.local/	Inbox (14) - dkowalski@signalco.local
+9	2	https://www.weather.gov/pbz/	Pittsburgh, PA - National Weather Service
+12	1	https://wiki.signalco.local/eng/Traffic-Controller-Gen4	Traffic Controller Gen4 - Engineering Wiki
+20	1	https://wiki.signalco.local/eng/Traffic-Controller-Gen4/firmware	Gen4 Firmware Notes - Engineering Wiki
+34	1	https://tickets.signalco.local/browse/ENG-2231	ENG-2231 Pedestrian timing drift on Liberty Ave
+41	1	https://tickets.signalco.local/browse/ENG-2240	ENG-2240 Gen4 bid package for Allegheny County
+55	2	https://www.google.com/search?q=liberty+ave+traffic+signal+timing	liberty ave traffic signal timing - Google Search
+56	1	https://www.portauthority.org/	Pittsburgh Regional Transit
+88	3	https://mail.signalco.local/	Inbox (9) - dkowalski@signalco.local
+120	2	https://www.google.com/search?q=pirates+score	pirates score - Google Search
+121	1	https://www.mlb.com/pirates	Official Pittsburgh Pirates Website
+190	1	https://wiki.signalco.local/eng/Gen4-Bid/pricing	Gen4 Bid Pricing (CONFIDENTIAL) - Engineering Wiki
+196	1	https://wiki.signalco.local/eng/Gen4-Bid/pricing/export	Gen4 Bid Pricing export
+240	2	https://www.google.com/search?q=lunch+near+smithfield+st	lunch near smithfield st - Google Search
+300	3	https://mail.signalco.local/	Inbox (11) - dkowalski@signalco.local
+302	1	https://mail.signalco.local/message/88213	RE: Offer letter - Three Rivers Traffic Systems
+330	1	https://tickets.signalco.local/browse/ENG-2231	ENG-2231 Pedestrian timing drift on Liberty Ave
+420	2	https://www.weather.gov/pbz/	Pittsburgh, PA - National Weather Service
+# Day 2, Tue 2026-09-29
+1440	2	https://intranet.signalco.local/	Steel City Signal Co. Intranet
+1442	3	https://mail.signalco.local/	Inbox (6) - dkowalski@signalco.local
+1450	1	https://tickets.signalco.local/browse/ENG-2240	ENG-2240 Gen4 bid package for Allegheny County
+1462	2	https://www.google.com/search?q=how+to+send+a+file+without+work+email	how to send a file without work email - Google Search
+1464	2	https://www.google.com/search?q=paste+site+that+deletes+after+reading	paste site that deletes after reading - Google Search
+1466	1	https://yinzpaste.example/	yinzpaste - burn after reading
+1470	2	https://www.google.com/search?q=hide+text+from+dlp+scanner	hide text from dlp scanner - Google Search
+1473	2	https://www.google.com/search?q=cyberchef	cyberchef - Google Search
+1474	1	https://gchq.github.io/CyberChef/	CyberChef
+1475	1	https://gchq.github.io/CyberChef/#recipe=To_Base64('A-Za-z0-9%2B/%3D')&input=aGVsbG8	CyberChef
+1478	1	https://gchq.github.io/CyberChef/#recipe=XOR(%7B'option':'UTF8','string':'yinz'%7D,'Standard',false)	CyberChef
+1479	1	https://gchq.github.io/CyberChef/#recipe=XOR(%7B'option':'UTF8','string':'yinz'%7D,'Standard',false)To_Base64('A-Za-z0-9%2B/%3D')	CyberChef
+1484	1	https://yinzpaste.example/new	yinzpaste - new paste
+1486	1	https://yinzpaste.example/p/Q7m2xK	yinzpaste - paste created (burns after 1 read)
+1490	2	https://webmail.example/inbox	Inbox - dana.k.pgh@webmail.example
+1491	1	https://webmail.example/sent	Sent - dana.k.pgh@webmail.example
+1500	2	https://www.google.com/search?q=how+to+clear+firefox+history	how to clear firefox history - Google Search
+1501	1	https://support.mozilla.org/en-US/kb/delete-browsing-search-download-history-firefox	Delete browsing, search and download history on Firefox
+1530	2	https://www.mlb.com/pirates	Official Pittsburgh Pirates Website
+1600	3	https://mail.signalco.local/	Inbox (3) - dkowalski@signalco.local
+1602	1	https://mail.signalco.local/compose	Compose: Resignation - Dana Kowalski
