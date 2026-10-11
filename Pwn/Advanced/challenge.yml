@@ -1,31 +1,45 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Pwn Advanced (TBD)"
-author: "TBD"
+name: "Jumbotron"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Pwn"
 description: |-
-  TBD
-# Beginner 100, Intermediate 250, Advanced 500 (numbered slots like "Beginner 1" use their tier's value)
+  The scoreboard operator console puts your message on the Acrisure Stadium
+  jumbotron -- and hands it straight to printf with no format string of its
+  own, so your input IS the format string. The secret cheer (the flag) only
+  lights up once a global override holds the operator code 1337, and the
+  normal path never sets it. Turn the format-string bug into a write, set the
+  override, then ask for the cheer.
+
+  The exact binary the server runs is attached.
+
+  Connect with: nc EVENT_HOST 8014
+
+  Flag format: BarSides{...}
 value: 500
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: EVENT_HOST PORT
+# Raw TCP line service (socat), not a web page.
+connection_info: EVENT_HOST 8014
 
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{the_jumbotron_reads_your_mind}
 
 tags:
   - advanced
+  - pwn
+  - format-string
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/scoreboard
 
-hints: []
+hints:
+  - content: "The console prints your message with printf(line) directly, so %p and %x leak the stack and %n writes to memory. First find which argument position your own input sits at (send AAAAAAAA.%p.%p.%p... and count)."
+    cost: 0
+  - content: "Your input lands at argument offset 6. Write 1337 to the fixed address of the global 'override' (nm scoreboard | grep override), then send 'flag'. pwntools: fmtstr_payload(6, {elf.sym['override']: 1337})."
+    cost: 50
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"

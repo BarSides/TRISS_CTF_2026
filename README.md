@@ -28,7 +28,7 @@ Each category has a Beginner, Intermediate and Advanced slot. A tier can hold up
 | Forensics | Rigged Race | Forgot to Clear History<br>Head Scratcher | Keys to the Incline |
 | ICS | Pump Station Gossip | Open the Flood Gate | Crack the Vault |
 | Misc | Box Score | Scoreboard Math | Detour |
-| Pwn | Will Call | Skybox | TBD |
+| Pwn | Will Call | Skybox | Jumbotron |
 | Rev | Skip the Line | Twirl the Towel | Blow on the Cartridge |
 | Steganography | Ghost Sign | Nesting Dolls | Scatter Shot |
 | Web | Staff Only | 446 Bridges | Link Preview |
