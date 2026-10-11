@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inky Pro Max | Monongahela Incline Help Desk</title>
+<style>
+  :root { --gold: #ffb612; --ink: #1b1b1b; --bg: #f4f1ea; --card: #fff; --muted: #6b6b6b; --red: #c0392b; --green: #2e7d32; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); }
+  header { background: var(--ink); color: var(--gold); padding: 16px 20px; }
+  header h1 { margin: 0; font-size: 1.3rem; }
+  header p { margin: 4px 0 0; color: #ddd; font-size: .9rem; }
+  main { max-width: 760px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; height: calc(100vh - 76px); }
+  .guards { display: flex; flex-wrap: wrap; gap: 6px; font-size: .8rem; margin-bottom: 6px; }
+  .guards span { background: var(--card); border: 1px solid #ccc; border-radius: 10px; padding: 3px 9px; }
+  #log { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 8px 0; }
+  .msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; line-height: 1.4; white-space: pre-wrap; word-wrap: break-word; }
+  .bot { background: var(--card); border: 1px solid #ddd; align-self: flex-start; }
+  .you { background: var(--gold); align-self: flex-end; }
+  .blocked { border-color: var(--red); color: var(--red); }
+  .tag { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; }
+  .typing { color: var(--muted); font-style: italic; }
+  form { display: flex; gap: 8px; padding-top: 8px; }
+  input { flex: 1; min-width: 0; padding: 12px; border: 1px solid #bbb; border-radius: 10px; font-size: 1rem; }
+  button { padding: 12px 18px; border: 0; border-radius: 10px; background: var(--ink); color: var(--gold); font-weight: 600; font-size: 1rem; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: wait; }
+  #unlockmsg { font-family: ui-monospace, monospace; padding-top: 6px; min-height: 1.4em; word-break: break-all; }
+  .ok { color: var(--green); } .bad { color: var(--red); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Inky Pro Max</h1>
+  <p>Now powered by a real large language model. Now with four layers of security.</p>
+</header>
+<main>
+  <div class="guards"><span>1. Input guard</span><span>2. Hardened system prompt</span><span>3. Output guard</span><span>4. AI judge (fast skim mode)</span></div>
+  <div id="log" aria-live="polite"></div>
+  <form id="chat">
+    <input id="m" autocomplete="off" maxlength="600" placeholder="Ask Inky Pro Max anything..." autofocus>
+    <button id="send">Send</button>
+  </form>
+  <form id="unlock">
+    <input id="p" autocomplete="off" maxlength="60" placeholder="Maintenance gate passphrase">
+    <button>Unlock</button>
+  </form>
+  <div id="unlockmsg"></div>
+</main>
+<script>
+  const log = document.getElementById("log"), input = document.getElementById("m"), send = document.getElementById("send");
+  const history = [];
+  function add(text, cls, tag) {
+    const d = document.createElement("div");
+    d.className = "msg " + cls;
+    if (tag) { const t = document.createElement("span"); t.className = "tag"; t.textContent = "Blocked by " + tag; d.appendChild(t); }
+    d.appendChild(document.createTextNode(text));
+    log.appendChild(d);
+    log.scrollTop = log.scrollHeight;
+    return d;
+  }
+  add("Hiya! I'm Inky Pro Max. I'm a lot smarter than the old Inky, and a lot better at keeping secrets.", "bot");
+  document.getElementById("chat").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const message = input.value.trim();
+    if (!message) return;
+    add(message, "you");
+    input.value = "";
+    send.disabled = true;
+    const t = add("Inky Pro Max is thinking...", "bot typing");
+    try {
+      const r = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message, history }) });
+      const d = await r.json();
+      t.remove();
+      add(d.reply, d.blocked_by ? "bot blocked" : "bot", d.blocked_by);
+      if (!d.blocked_by) history.push({ role: "user", content: message }, { role: "assistant", content: d.reply });
+      while (history.length > 12) history.shift();
+    } catch (err) {
+      t.remove();
+      add("Inky lost the connection. Try again.", "bot blocked");
+    }
+    send.disabled = false;
+    input.focus();
+  });
+  document.getElementById("unlock").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const out = document.getElementById("unlockmsg");
+    const r = await fetch("/api/unlock", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ passphrase: document.getElementById("p").value }) });
+    const d = await r.json();
+    out.className = d.ok ? "ok" : "bad";
+    out.textContent = d.ok ? "Gate unlocked: " + d.flag : "Wrong passphrase.";
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+# Event laptop (NVIDIA RTX 2080). Needs the NVIDIA driver and NVIDIA Container Toolkit on the host.
+# No GPU? Use docker-compose.cpu.yml instead (smaller model, slower replies).
+services:
+  llm:
+    build:
+      context: llm
+      dockerfile: Dockerfile.cuda
+    image: triss2026/ai-advanced-llm
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+
+  challenge:
+    build: app
+    image: triss2026/ai-advanced
+    environment:
+      LLM_URL: http://llm:8080
+      LOG_CHATS: "1"
+    ports:
+      - "8003:8000"
+    depends_on:
+      - llm
+    restart: unless-stopped

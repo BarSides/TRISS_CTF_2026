@@ -1,0 +1,30 @@
+# NVIDIA GPU build of llama.cpp's llama-server plus the model (the event laptop's RTX 2080).
+# Needs Internet at build time only. At run time the host needs the NVIDIA driver and the
+# NVIDIA Container Toolkit, so `docker run --gpus all` works.
+FROM python:3.12-slim AS source
+COPY fetch_source.py /
+RUN python3 /fetch_source.py 0.3.16 /src
+
+FROM python:3.12-slim AS model
+ARG MODEL_REPO=ai/qwen3
+ARG MODEL_TAG=4b-instruct-2507-q4_K_M
+COPY fetch_model.py /
+RUN python3 /fetch_model.py "$MODEL_REPO" "$MODEL_TAG" /model.gguf
+
+FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 AS build
+# 75 = Turing (RTX 20xx); 61 and 86 cover Pascal and Ampere if the laptop turns out different.
+ARG CUDA_ARCHITECTURES="61;75;86"
+RUN apt-get update && apt-get install -y --no-install-recommends cmake && rm -rf /var/lib/apt/lists/*
+COPY --from=source /src/llama_cpp_python-0.3.16/vendor/llama.cpp /llama.cpp
+WORKDIR /llama.cpp
+RUN cmake -B build -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES="$CUDA_ARCHITECTURES" -DLLAMA_CURL=OFF \
+      -DGGML_NATIVE=OFF -DGGML_OPENMP=OFF -DBUILD_SHARED_LIBS=OFF -DLLAMA_BUILD_TESTS=OFF \
+      -DCMAKE_EXE_LINKER_FLAGS=-Wl,--allow-shlib-undefined \
+ && cmake --build build --config Release --target llama-server -j"$(nproc)"
+
+FROM nvidia/cuda:12.4.1-runtime-ubuntu22.04
+COPY --from=build /llama.cpp/build/bin/llama-server /usr/local/bin/
+COPY --from=model /model.gguf /models/model.gguf
+EXPOSE 8080
+ENTRYPOINT ["llama-server", "--host", "0.0.0.0", "--port", "8080", "-m", "/models/model.gguf", "--jinja", "--no-webui", "-ngl", "99"]
+CMD ["-c", "16384", "--parallel", "8"]
