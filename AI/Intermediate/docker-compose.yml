@@ -1,0 +1,7 @@
+services:
+  challenge:
+    build: .
+    image: triss2026/ai-intermediate
+    ports:
+      - "8002:8000"
+    restart: unless-stopped
