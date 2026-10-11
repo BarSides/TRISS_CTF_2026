@@ -1,29 +1,42 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Mobile Advanced (TBD)"
-author: "TBD"
+name: "Ride All Day"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Mobile"
 description: |-
-  TBD
-# Beginner 100, Intermediate 250, Advanced 500 (numbered slots like "Beginner 1" use their tier's value)
+  Kennywood's gate staff scan ride-all-day wristbands with this app. After
+  someone pulled the check out of last year's version with a decompiler,
+  the night crew moved it into native code. Now the Java just hands your
+  code to a C library and waits for a yes or no.
+
+  The only wristband code the gate accepts is the flag. Work out what the
+  native check wants and run it backwards. No phone needed.
+
+  Flag format: BarSides{...}
 value: 500
 type: standard
 
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{native_code_still_rides_free}
 
 tags:
   - advanced
+  - mobile
+  - android
+  - native
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/ride_all_day.apk
 
-hints: []
+hints:
+  - content: "jadx shows Gate.scan() is a native method in the library \"wristband\". An APK is a zip: unzip it and open lib/x86_64/libwristband.so in Ghidra."
+    cost: 0
+  - content: "Start at the exported function Java_org_barsides_rideallday_Gate_scan. The calls through the JNIEnv pointer just fetch your string. The interesting part is the 38-step loop that compares against a table in .rodata."
+    cost: 50
+  - content: "Each byte is XORed with an 8-byte key, rotated left by 3 bits, then has 17*i added. Undo those steps in reverse order for every byte of the expected table."
+    cost: 100
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
