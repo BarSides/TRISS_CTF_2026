@@ -26,7 +26,7 @@ Each category has a Beginner, Intermediate and Advanced slot:
 | AI | Off the Rails | Phish Sandwich | Inky Pro Max |
 | Cryptography | Steel City Shift | Bridge Keeper's Revenge | The Bridge Keeper's Last Note |
 | Forensics | TBD | TBD | TBD |
-| ICS | Pump Station Gossip | Open the Flood Gate | TBD |
+| ICS | Pump Station Gossip | Open the Flood Gate | Crack the Vault |
 | Lockpicking | TBD | TBD | TBD |
 | Misc | TBD | TBD | TBD |
 | Rev | TBD | TBD | TBD |
@@ -37,7 +37,7 @@ Every slot starts as a placeholder with `state: hidden` and the flag `BarSides{C
 
 Update the table above in the same PR that adds or renames a challenge.
 
-Players need Python 3 (standard library only) for Cryptography Advanced and Steganography Advanced; everything else is solvable with the local CyberChef or common tools.
+Players need Python 3 (standard library only) for Cryptography Advanced, Steganography Advanced, and the ICS challenges (a small Modbus client is attached to each; mbpoll or pymodbus also work). Everything else is solvable with the local CyberChef or common tools.
 
 To add a category, copy `_template/` into `<Category>/<Tier>/` for each tier.
 

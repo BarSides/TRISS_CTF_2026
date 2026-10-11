@@ -1,0 +1,40 @@
+(*********************************************************************
+ * Point Bridge Vault -- entry lock                                  *
+ * Exported from the controller as IEC 61131-3 Structured Text.      *
+ * Modbus map:                                                       *
+ *   Coil  00001  RUN         (must be TRUE to accept entries)       *
+ *   Coil  00002  RESET       (pulse TRUE to clear the sequence)     *
+ *   40031 ENTRY  -- write each step of the code here, one at a time *
+ *   40041 STEP   -- read-only, current step 0..4 (4 = unlocked)     *
+ * When STEP reaches 4 the controller posts the vault note into      *
+ * registers 40201 and up (ASCII, two chars per register).          *
+ *********************************************************************)
+
+FUNCTION_BLOCK VaultLock
+VAR CONSTANT
+    SEED : WORD := 16#5A;
+    STEP_GAIN : INT := 100;
+    K : ARRAY[0..3] OF WORD := [16#12, 16#34, 16#56, 16#78];
+END_VAR
+VAR
+    step : INT := 0;              (* mapped to 40041 *)
+END_VAR
+
+(* Expected value for each step i:
+ *     EXPECTED(i) = (K[i] XOR SEED) + i * STEP_GAIN                 *)
+
+BEGIN
+    IF NOT RUN THEN
+        step := 0;                (* lock drops out of RUN *)
+    ELSIF RESET THEN
+        step := 0;                (* operator cleared the sequence *)
+    ELSIF step < 4 THEN
+        IF ENTRY = WORD_TO_INT((K[step] XOR SEED)) + step * STEP_GAIN THEN
+            step := step + 1;     (* correct digit, advance *)
+        ELSE
+            step := 0;            (* any wrong digit resets to the start *)
+        END_IF;
+    END_IF;
+
+    (* STEP = 4 energizes the vault release and exposes the note. *)
+END_FUNCTION_BLOCK
