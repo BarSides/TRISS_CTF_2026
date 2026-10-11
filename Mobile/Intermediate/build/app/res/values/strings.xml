@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pothole Patrol</string>
+    <string name="tagline">Report it. We\'ll get to it. Eventually.</string>
+    <string name="street_hint">Street or intersection</string>
+    <string name="depth_hint">How deep? (inches)</string>
+    <string name="report">File report</string>
+    <string name="queue_title">Repair queue</string>
+    <string name="footer">Pothole Patrol v2.3 · City of Pittsburgh crews, probably</string>
+    <!-- Crew dispatch key, used by the supervisor console. Do not translate. -->
+    <string name="dispatch_key" translatable="false">CRATER-CREW-412</string>
+</resources>

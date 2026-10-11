@@ -1,29 +1,42 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Mobile Intermediate (TBD)"
-author: "TBD"
+name: "Pothole Patrol"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Mobile"
 description: |-
-  TBD
-# Beginner 100, Intermediate 250, Advanced 500 (numbered slots like "Beginner 1" use their tier's value)
+  Pittsburgh's pothole reporting app lets anyone file a crater and watch it
+  join a repair queue that never moves. Version 2.3 shipped with a
+  supervisor console for crew bosses, but the sign-in screen got cut, so
+  nobody can open it. The repair authorization it shows is still inside
+  the app, sealed so it won't turn up in a simple search.
+
+  Open the APK in jadx, find the console, and unseal the authorization
+  yourself. No phone needed.
+
+  Flag format: BarSides{...}
 value: 250
 type: standard
 
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{potholes_patched_at_runtime}
 
 tags:
   - intermediate
+  - mobile
+  - android
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/pothole_patrol.apk
 
-hints: []
+hints:
+  - content: "Searching for BarSides finds nothing, because the flag is only built when the code runs. Look through every class in org.barsides.potholepatrol, not just MainActivity."
+    cost: 0
+  - content: "SupervisorConsole XORs SEALED with the dispatch_key string resource. Find that string under Resources > resources.arsc > res/values/strings.xml."
+    cost: 25
+  - content: "In CyberChef: paste the SEALED numbers, use From Decimal (delimiter Comma), then XOR with the key as UTF8."
+    cost: 50
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
