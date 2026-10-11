@@ -1,30 +1,38 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "AI Intermediate (TBD)"
-author: "TBD"
+name: "Phish Sandwich"
+author: "justinforbes"
 attribution: "BarSides"
 category: "AI"
 description: |-
-  TBD
+  After Inky's little incident, the Monongahela Incline bought SpamSieve AI,
+  a machine learning mail filter. You're on the red team for this year's
+  phishing exercise. Your email has to ask staff to send urgent gift card codes,
+  and it has to land in the inbox, not the spam folder.
+
+  The filter is happy to show you its work.
+
+  Flag format: BarSides{...}
 value: 250
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
+connection_info: http://EVENT_HOST:8002
 
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{bury_the_phish_in_good_words}
 
 tags:
   - intermediate
+  - adversarial-ml
 
-# Paths relative to this folder, attached as player downloads.
 files: []
 
-hints: []
+hints:
+  - content: "You can't remove the scam words, but you can add more words. Look at the weights table: which words pull the score toward a normal email?"
+    cost: 0
+  - content: "The model learned what normal Incline staff mail looks like: shifts, stations, cars, maintenance, thanks. Wrap your request in a believable staff email. Repeating a word only counts once, so use many different ones."
+    cost: 25
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
