@@ -1,0 +1,10 @@
+# Hosted challenges only. Rename to docker-compose.yml.
+# Tag the image as triss2026/<category>-<tier> so scripts/build-images.sh can save it
+# and the event server can run it without pulling anything.
+services:
+  challenge:
+    build: .
+    image: triss2026/category-tier
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
