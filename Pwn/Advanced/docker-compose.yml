@@ -1,0 +1,7 @@
+services:
+  challenge:
+    build: .
+    image: triss2026/pwn-advanced
+    ports:
+      - "8014:5000"
+    restart: unless-stopped
