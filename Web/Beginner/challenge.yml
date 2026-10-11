@@ -1,30 +1,37 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Web Beginner (TBD)"
-author: "TBD"
+name: "Staff Only"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Web"
 description: |-
-  TBD
+  The Great Pierogi Race fan site has a secret backstage page where the racers
+  pick up their passes. It isn't linked anywhere, and the site's staff swear
+  that only staff can get in. Find the backstage page and talk your way past
+  the door.
+
+  Flag format: BarSides{...}
 value: 100
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
+connection_info: http://EVENT_HOST:8004
 
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{robots_txt_is_a_map_not_a_lock}
 
 tags:
   - beginner
+  - robots.txt
+  - cookies
 
-# Paths relative to this folder, attached as player downloads.
 files: []
 
-hints: []
+hints:
+  - content: "Websites keep a file that tells search engine robots which pages they may not visit. It lives at the same path on almost every site: /robots.txt"
+    cost: 0
+  - content: "The backstage page decides who is staff by reading a cookie your browser sends. Open developer tools (F12), go to Storage (Firefox) or Application (Chrome), find the cookie and change its value."
+    cost: 10
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
