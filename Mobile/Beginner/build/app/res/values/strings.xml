@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Parking Chair</string>
+    <string name="tagline">Holding yinz\'s shoveled spot since the blizzard of \'93</string>
+    <string name="spot">Spot #14 · Dobson St, Lawrenceville</string>
+    <string name="status_held">Chair is DOWN. This spot is spoken for.</string>
+    <string name="code_hint">Owner code</string>
+    <string name="move_chair">Move the chair</string>
+    <string name="wrong_code">That\'s not your chair, n\'at. Leave it be.</string>
+    <string name="footer">Parking Chair v1.0 · Not affiliated with any actual chair</string>
+</resources>
