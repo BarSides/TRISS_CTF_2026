@@ -1,30 +1,38 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Steganography Intermediate (TBD)"
-author: "TBD"
+name: "Nesting Dolls"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Steganography"
 description: |-
-  TBD
+  A postcard from Pittsburgh turned up in the BarSides mailbox, signed by our
+  old friend The Bridge Keeper. The front is a nice view of the Point, but the
+  card is suspiciously heavy for a picture this simple. There's more to this
+  postcard than its front.
+
+  Flag format: BarSides{...}
 value: 250
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{postcards_have_two_sides}
 
 tags:
   - intermediate
+  - image
+  - file-carving
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/postcard.jpg
 
-hints: []
+hints:
+  - content: "A JPEG ends with the bytes FF D9. Image viewers stop reading there, but nothing stops someone from adding more data after it. What else is inside this file?"
+    cost: 0
+  - content: "Photos carry metadata (EXIF) about the camera and the picture. Try CyberChef's Extract EXIF operation, or exiftool."
+    cost: 25
+  - content: "The extra data is a password-protected ZIP. In CyberChef, run Unzip on the whole file and put the password from the EXIF in the Password box. Renaming the file to .zip and opening it with 7-Zip also works."
+    cost: 50
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
