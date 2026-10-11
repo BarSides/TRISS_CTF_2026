@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ride All Day</string>
+    <string name="tagline">Kennywood wristband scanner · Gate 3</string>
+    <string name="code_hint">Wristband code</string>
+    <string name="scan">Scan wristband</string>
+    <string name="ok">Wristband valid. Enjoy the Phantom\'s Revenge!</string>
+    <string name="bad">Not a valid wristband. Back of the line for the Jack Rabbit.</string>
+    <string name="footer">Ride All Day v4.1 · Wristband math by the night crew</string>
+</resources>

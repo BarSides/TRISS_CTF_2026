@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A roller coaster hill with a car cresting the top. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- supports -->
+    <path android:strokeColor="#FF8A8A8A" android:strokeWidth="2.5"
+        android:pathData="M34,76 L34,86 M44,52 L44,86 M54,38 L54,86 M64,52 L64,86 M74,76 L74,86 M34,86 L74,86 M44,64 L64,64" />
+    <!-- track -->
+    <path android:strokeColor="#FFFFB612" android:strokeWidth="5" android:strokeLineCap="round"
+        android:pathData="M16,82 Q30,82 40,58 Q50,34 54,34 Q58,34 68,58 Q78,82 92,82" />
+    <!-- car -->
+    <path android:fillColor="#FFF2F2F2"
+        android:pathData="M46,28 L62,28 Q64,28 64,30 L64,32 L44,32 L44,30 Q44,28 46,28 Z" />
+    <path android:fillColor="#FFFF6B5E" android:pathData="M47,24 L51,24 L51,28 L47,28 Z M57,24 L61,24 L61,28 L57,28 Z" />
+</vector>
