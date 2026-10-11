@@ -1,0 +1,21 @@
+# Fallback for a host without an NVIDIA GPU: Qwen3 1.7B on CPU. Same challenge, slower and a bit dumber.
+#   docker compose -f docker-compose.cpu.yml build   # with Internet, then docker save both images
+#   docker compose -f docker-compose.cpu.yml up -d --no-build
+services:
+  llm:
+    build: llm
+    image: triss2026/ai-advanced-llm-cpu
+    command: ["-c", "8192", "--parallel", "2"]
+    restart: unless-stopped
+
+  challenge:
+    build: app
+    image: triss2026/ai-advanced
+    environment:
+      LLM_URL: http://llm:8080
+      LOG_CHATS: "1"
+    ports:
+      - "8003:8000"
+    depends_on:
+      - llm
+    restart: unless-stopped

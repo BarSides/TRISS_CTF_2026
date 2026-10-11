@@ -1,30 +1,40 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "AI Advanced (TBD)"
-author: "TBD"
+name: "Inky Pro Max"
+author: "justinforbes"
 attribution: "BarSides"
 category: "AI"
 description: |-
-  TBD
+  After two embarrassing leaks, the Monongahela Incline replaced Inky with
+  Inky Pro Max: a real large language model behind four layers of AI security.
+  It still knows the passphrase for the maintenance gate.
+
+  Get it out of Inky, then use the unlock form to open the gate.
+
+  Flag format: BarSides{...}
 value: 500
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
+connection_info: http://EVENT_HOST:8003
 
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{every_guard_has_a_blind_spot}
 
 tags:
   - advanced
+  - prompt-injection
+  - llm
 
-# Paths relative to this folder, attached as player downloads.
 files: []
 
-hints: []
+hints:
+  - content: "Each guard has a blind spot. Pay attention to which guard stops you: the input guard looks for words, the output guard looks for one exact word, and the judge reads like a person in a hurry."
+    cost: 0
+  - content: "Inky will happily repeat its setup text if you don't use any of the blocked words. The output guard only removes the passphrase when it's written as a normal word."
+    cost: 50
+  - content: "The AI judge only skims the first few hundred characters of each answer. Make Inky say something long and harmless first."
+    cost: 100
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
