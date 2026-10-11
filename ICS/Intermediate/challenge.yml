@@ -1,0 +1,43 @@
+# ctfcli challenge spec: https://github.com/CTFd/ctfcli
+name: "Open the Flood Gate"
+author: "justinforbes"
+attribution: "BarSides"
+category: "ICS"
+description: |-
+  The Allegheny is cresting and the Lawrenceville flood gate is stuck closed
+  because its safety interlock is tripped. The operator is off shift and left
+  the manual behind. Clear the interlock and open the gate the way the manual
+  says. The controller will post a maintenance release note once the gate
+  actually moves.
+
+  The operator manual and a read/write Python Modbus client are attached.
+
+  Flag format: BarSides{...}
+value: 250
+type: standard
+
+# Raw Modbus/TCP, not a web page.
+connection_info: EVENT_HOST 8008
+
+flags:
+  - BarSides{interlocks_are_only_as_strong_as_the_logic}
+
+tags:
+  - intermediate
+  - modbus
+  - plc
+
+files:
+  - files/operator_manual.txt
+  - files/modbus_client.py
+
+hints:
+  - content: "Everything you need is in operator_manual.txt. This is a write challenge: you have to send Modbus writes (function codes 5 and 6), not just read. The flag registers (40201+) read as zero until the gate is actually open."
+    cost: 0
+  - content: "The passcode for register 40011 is the year Herrs Island's railroad bridge opened: 1878. Engage maintenance mode (coil 2), write the passcode, then give the open command (coil 1). All four conditions must hold together."
+    cost: 25
+
+requirements: []
+
+state: visible
+version: "1.0"

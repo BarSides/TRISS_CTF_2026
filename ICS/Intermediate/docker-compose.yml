@@ -1,0 +1,7 @@
+services:
+  challenge:
+    build: .
+    image: triss2026/ics-intermediate
+    ports:
+      - "8008:5021"
+    restart: unless-stopped

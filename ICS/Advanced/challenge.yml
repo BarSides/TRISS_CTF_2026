@@ -1,0 +1,43 @@
+# ctfcli challenge spec: https://github.com/CTFd/ctfcli
+name: "Crack the Vault"
+author: "justinforbes"
+attribution: "BarSides"
+category: "ICS"
+description: |-
+  The Point Bridge Vault is guarded by a small combination lock that runs
+  inside the PLC itself. Maintenance left behind an export of the controller's
+  program. Read the logic, work out the four-step entry code, and drive the
+  lock over Modbus to open the vault.
+
+  The exported PLC program and a read/write Python Modbus client are attached.
+
+  Flag format: BarSides{...}
+value: 500
+type: standard
+
+# Raw Modbus/TCP, not a web page.
+connection_info: EVENT_HOST 8009
+
+flags:
+  - BarSides{i_read_the_ladder_and_walked_right_in}
+
+tags:
+  - advanced
+  - modbus
+  - plc
+  - reversing
+
+files:
+  - files/vault_lock.scl
+  - files/modbus_client.py
+
+hints:
+  - content: "vault_lock.scl is the PLC program. The lock takes a four-step code written one value at a time into register 40031; a wrong value resets it. Each step's value is EXPECTED(i) = (K[i] XOR SEED) + i * STEP_GAIN."
+    cost: 0
+  - content: "With SEED=0x5A, STEP_GAIN=100, K=[0x12,0x34,0x56,0x78] the code is 72, 210, 212, 334. Set RUN (coil 1) first, then write the four values in order; the step counter 40041 reaches 4 and the flag appears at 40201+."
+    cost: 50
+
+requirements: []
+
+state: visible
+version: "1.0"

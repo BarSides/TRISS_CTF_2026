@@ -1,0 +1,14 @@
+Tag,Description,Modbus address,Table,Units
+LT-101,Wet well level,40001,Holding,0.1 ft
+SC-101,Pump 1 speed,40002,Holding,rpm
+SC-102,Pump 2 speed,40003,Holding,rpm
+PT-101,Discharge pressure,40004,Holding,0.1 psi
+LSH-101,High level alarm setpoint,40005,Holding,0.1 ft
+LSL-101,Low level cutoff,40006,Holding,0.1 ft
+P-101,Pump 1 run,00001,Coil,on/off
+P-102,Pump 2 run,00002,Coil,on/off
+XV-101,Intake gate open,00003,Coil,on/off
+PWR-OK,Control power OK,10001,Discrete input,on/off
+ZS-DOOR,Panel door closed,10002,Discrete input,on/off
+LAH-101,High level alarm,10003,Discrete input,on/off
+MAINT,Maintenance note (ASCII; 2 characters per register),40101-40164,Holding,text
