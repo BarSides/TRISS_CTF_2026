@@ -1,0 +1,17 @@
+:root { --gold: #fdb827; --ink: #27251f; --paper: #fffaf0; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--paper); color: var(--ink); }
+header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 24px; background: var(--ink); }
+header a { color: var(--gold); text-decoration: none; }
+.brand { font-weight: 800; font-size: 1.2rem; }
+nav a { margin-left: 16px; }
+main { max-width: 760px; margin: 0 auto; padding: 32px 16px; }
+.hero { text-align: center; padding: 32px 0; }
+.hero h1 { font-size: 2.2rem; }
+.button { display: inline-block; padding: 10px 20px; background: var(--gold); color: var(--ink); font-weight: 700; border-radius: 6px; text-decoration: none; }
+.racers { list-style: none; padding: 0; }
+.racers li { display: flex; flex-direction: column; padding: 12px 0; border-bottom: 1px solid #ddd; }
+.denied { color: #b00020; font-weight: 700; font-size: 1.3rem; }
+.ok { color: #1b5e20; font-weight: 700; }
+.flag { font-family: ui-monospace, monospace; font-size: 1.2rem; background: var(--ink); color: var(--gold); padding: 12px; border-radius: 6px; word-break: break-all; }
+footer { text-align: center; font-size: 0.85rem; color: #666; padding: 24px 16px; }
