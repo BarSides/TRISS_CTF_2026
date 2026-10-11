@@ -1,30 +1,38 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Web Advanced (TBD)"
-author: "TBD"
+name: "Link Preview"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Web"
 description: |-
-  TBD
+  PghChat shows a little preview whenever you paste a link, fetching the page
+  for you on its server. Somewhere behind that server is an admin console that
+  is supposed to be reachable only from inside. PghChat refuses to preview the
+  obvious internal addresses... but it isn't very thorough about it.
+
+  Flag format: BarSides{...}
 value: 500
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
+connection_info: http://EVENT_HOST:8006
 
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{server_side_requests_cross_the_bridge}
 
 tags:
   - advanced
+  - ssrf
 
-# Paths relative to this folder, attached as player downloads.
 files: []
 
-hints: []
+hints:
+  - content: "PghChat fetches the link on its own server, so the preview sees whatever PghChat's server can see, including things you can't reach yourself. This is called SSRF (server side request forgery)."
+    cost: 0
+  - content: "The admin console lives on the server itself (loopback). PghChat blocks the hostnames 'localhost' and '127.0.0.1' by an exact text match, but there are many other ways to write that same address."
+    cost: 50
+  - content: "127.0.0.1 can also be written 127.1, as the decimal number 2130706433, as [::1] (IPv6), or with a trailing dot like 127.0.0.1. -- try http://127.1/"
+    cost: 100
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
