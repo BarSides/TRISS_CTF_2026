@@ -1,0 +1,9 @@
+services:
+  challenge:
+    build: .
+    image: triss2026/misc-advanced
+    ports:
+      - "8011:1337"
+    read_only: true
+    pids_limit: 128
+    restart: unless-stopped

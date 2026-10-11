@@ -1,30 +1,42 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Misc Advanced (TBD)"
-author: "TBD"
+name: "Detour"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Misc"
 description: |-
-  TBD
+  Every road crew in Pittsburgh picked the same week. The city's detour
+  dispatcher reads out which roads are still open and asks for the fastest
+  way between two neighborhoods, over and over, with a stopwatch running.
+
+  Get 30 crews home on time in a row and dispatch hands over the flag. The
+  maps grow fast and you get 5 seconds per round, so nobody does this by
+  hand. A starter Python client is attached.
+
+  Flag format: BarSides{...}
 value: 500
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
+# Raw TCP, not a web page: nc EVENT_HOST 8011
+connection_info: EVENT_HOST 8011
 
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{dijkstra_knows_every_detour}
 
 tags:
   - advanced
+  - programming
+  - scripting
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/dispatch_client.py
 
-hints: []
+hints:
+  - content: "This is the shortest path problem from computer science class. Dijkstra's algorithm finds it: always explore the place you can reach soonest next. Python's heapq module gives you the priority queue."
+    cost: 0
+  - content: "The client's buffer also holds the previous round's 'Correct!' line and the banner. Only parse the text after the last ROUND line. Roads go both ways, so add each one to the graph in both directions."
+    cost: 50
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
