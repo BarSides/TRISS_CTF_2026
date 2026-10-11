@@ -9,9 +9,9 @@ No spreadsheet app:
 
 ```sh
 unzip -o box_score.xlsx -d box_score
-grep -o 'BarSides{[^}]*}' box_score/xl/sharedStrings.xml
+grep -ro 'BarSides{[^}]*}' box_score/xl/
 ```
 
-CyberChef works too: Unzip, then open `xl/sharedStrings.xml`.
+CyberChef works too: Unzip, then open `xl/worksheets/sheet4.xml` (the hidden sheet).
 
 Flag: `BarSides{hidden_sheets_still_get_emailed}`
