@@ -30,7 +30,7 @@ Each category has a Beginner, Intermediate and Advanced slot:
 | Misc | TBD | TBD | TBD |
 | Rev | TBD | TBD | TBD |
 | Steganography | Ghost Sign | Nesting Dolls | Scatter Shot |
-| Web | Staff Only | TBD | TBD |
+| Web | Staff Only | 446 Bridges | TBD |
 
 Every slot starts as a placeholder with `state: hidden` and the flag `BarSides{CHANGE_ME}`. A challenge is ready when its README and `challenge.yml` are filled in, the flag is real, and `state` is `visible`.
 
