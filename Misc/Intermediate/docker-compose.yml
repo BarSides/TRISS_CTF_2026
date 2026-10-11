@@ -1,0 +1,9 @@
+services:
+  challenge:
+    build: .
+    image: triss2026/misc-intermediate
+    ports:
+      - "8010:1337"
+    read_only: true
+    pids_limit: 64
+    restart: unless-stopped

@@ -1,30 +1,42 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Misc Intermediate (TBD)"
-author: "TBD"
+name: "Scoreboard Math"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Misc"
 description: |-
-  TBD
+  The Pierogies' scoreboard operator got tired of doing batting averages in
+  their head, so the IT intern wrote them a little math console. It runs real
+  Python, but the intern blocked every word that could "hurt the scoreboard",
+  so it's totally safe.
+
+  The intern also left flag.txt next to the console on the server. The
+  console's source is attached. Connect with nc and read the flag.
+
+  Flag format: BarSides{...}
 value: 250
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
+# Raw TCP, not a web page: nc EVENT_HOST 8010
+connection_info: EVENT_HOST 8010
 
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{string_glue_beats_word_filters}
 
 tags:
   - intermediate
+  - python
+  - jail
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/scoreboard.py
 
-hints: []
+hints:
+  - content: "The blocklist only checks the exact text you type. Can Python put a word together while it runs? Try 'fl'+'ag' and see what the console prints."
+    cost: 0
+  - content: "getattr(object, 'name') looks up an attribute by a string, and every builtin function lives on __builtins__. That string can be glued together from pieces."
+    cost: 25
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
