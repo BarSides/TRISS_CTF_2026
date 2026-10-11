@@ -1,30 +1,48 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Rev Advanced (TBD)"
-author: "TBD"
+name: "Blow on the Cartridge"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Rev"
 description: |-
-  TBD
+  Found in a Homestead basement: a STEELBOX 87, the 8-bit console nobody
+  remembers, and a cartridge of "Mill Hunk 2: Return to Homestead". The
+  game asks for a cheat code at the title screen. Legend says the code
+  gives you 99 lives.
+
+  We dumped the cartridge to `cheat.rom` and wrote down the console's
+  emulator, `steelbox`. The console's CPU is not anything you have seen
+  before. Learn its instruction set from the emulator, read the cartridge,
+  and recover the cheat code. The cheat code is the flag.
+
+  Run it on Linux (Kali, Ubuntu 22.04 or newer, or WSL):
+  `./steelbox cheat.rom`
+
+  Flag format: BarSides{...}
 value: 500
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{eight_bit_cheat_codes_never_die}
 
 tags:
   - advanced
+  - linux
+  - ghidra
+  - vm
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/steelbox
+  - files/cheat.rom
 
-hints: []
+hints:
+  - content: "The emulator is a loop around a big switch on one byte from the ROM. In Ghidra, each case of that switch is one instruction of the STEELBOX CPU. Write down each opcode, how many bytes follow it, and what it does to the registers."
+    cost: 0
+  - content: "The ROM starts with an 8-byte header (STLBOX87) and is loaded at address 0. Once you know the opcodes, a 30-line Python disassembler shows that the check is the same handful of instructions repeated once per character."
+    cost: 50
+  - content: "Each character is mixed with the previous character, so solve them in order. For each position, try all 256 byte values in your own copy of those instructions and keep the one that matches the CHK constant."
+    cost: 100
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
