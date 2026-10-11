@@ -5,7 +5,7 @@ attribution: "BarSides"
 category: "TBD"
 description: |-
   TBD
-# Beginner 100, Intermediate 250, Advanced 500
+# Beginner 100, Intermediate 250, Advanced 500 (numbered slots like "Beginner 1" use their tier's value)
 value: 100
 type: standard
 

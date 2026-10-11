@@ -9,10 +9,10 @@ Flags live in plaintext in each challenge's README and `challenge.yml`. Past yea
 
 ## Layout
 
-Each category has a Beginner, Intermediate and Advanced slot:
+Each category has a Beginner, Intermediate and Advanced slot. A tier can hold up to three challenges: the first lives in `<Tier>/`, the second in `<Tier> 1/` and the third in `<Tier> 2/` (for example `Web/Beginner`, `Web/Beginner 1`, `Web/Beginner 2`). `<Tier> 2` needs `<Tier> 1` to exist first.
 
 ```
-<Category>/<Tier>/
+<Category>/<Tier>/     or <Category>/<Tier> 1/, <Category>/<Tier> 2/
   README.md            Name, Author, Overview, Setup, Flag (same format as 2024/2025)
   challenge.yml        ctfcli spec, used to import the challenge into CTFd
   files/               anything players download (optional)
@@ -34,11 +34,13 @@ Each category has a Beginner, Intermediate and Advanced slot:
 
 Every slot starts as a placeholder with `state: hidden` and the flag `BarSides{CHANGE_ME}`. A challenge is ready when its README and `challenge.yml` are filled in, the flag is real, and `state` is `visible`.
 
-Update the table above in the same PR that adds or renames a challenge.
+Update the table above in the same PR that adds or renames a challenge. Extra challenges in a tier go in the same cell, in slot order, separated by `<br>`.
+
+Hosted challenges tag their image `triss2026/<category>-<tier>`, lowercased with spaces turned into dashes (`AI/Beginner 1` is `triss2026/ai-beginner-1`), and need a host port no other challenge uses. `scripts/validate.py` checks both, and `up.sh` and `build-images.sh` run each challenge as its own compose project under that same name.
 
 Players need Python 3 (standard library only) for Cryptography Advanced, Steganography Advanced, Forensics Advanced, and the ICS challenges (a small Modbus client is attached to each; mbpoll or pymodbus also work). Forensics Beginner and Advanced need Wireshark (or tshark), and Forensics Intermediate needs a SQLite reader (DB Browser for SQLite, `sqlite3`, or Python's built-in module). The Rev challenges are Linux programs, so they need Linux or WSL plus Ghidra (gdb or ltrace also work for Beginner); Rev Intermediate and Advanced also expect players to write a little Python. Most of these ship with Kali, but tell players to install them before arriving, since nothing can be downloaded at the venue. Misc Beginner needs a spreadsheet app (Excel or LibreOffice Calc), though unzipping the file also works. Misc Intermediate is reached with `nc` (netcat), or a few lines of Python if `nc` is missing, and Misc Advanced expects players to write a Python script (a starter client is attached). Everything else is solvable with the local CyberChef or common tools.
 
-To add a category, copy `_template/` into `<Category>/<Tier>/` for each tier.
+To add a category, copy `_template/` into `<Category>/<Tier>/` for each tier. To add a second or third challenge to a tier, copy `_template/` into `<Category>/<Tier> 1/` or `<Category>/<Tier> 2/`.
 
 ## No Internet at TRISS
 

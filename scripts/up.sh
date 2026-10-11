@@ -2,12 +2,15 @@
 # Start every hosted challenge from local images only. Pass "down" to stop them.
 set -euo pipefail
 cd "$(dirname "$0")/.."
+. scripts/lib.sh
 action=${1:-up}
 find . -name docker-compose.yml -not -path './_template/*' -not -path './offline/*' | sort | while read -r f; do
-  echo "==> $(dirname "$f")"
+  dir=$(dirname "$f")
+  project=$(project_name "$dir")
+  echo "==> $dir"
   if [ "$action" = down ]; then
-    docker compose -f "$f" down
+    docker compose -p "$project" -f "$f" down
   else
-    docker compose -f "$f" up -d --no-build --pull never
+    docker compose -p "$project" -f "$f" up -d --no-build --pull never
   fi
 done
