@@ -1,0 +1,43 @@
+# ctfcli challenge spec: https://github.com/CTFd/ctfcli
+name: "Pump Station Gossip"
+author: "justinforbes"
+attribution: "BarSides"
+category: "ICS"
+description: |-
+  The Herrs Island Pump Station keeps the Allegheny out of the North Side's
+  basements, and its PLC sits on the plant network talking Modbus/TCP to
+  anyone who connects. The night operator swears they left a maintenance note
+  "in the PLC" before going home. Connect to the PLC, read its registers, and
+  find the note.
+
+  The station's tag sheet and a small Python 3 Modbus client are attached.
+
+  Flag format: BarSides{...}
+value: 100
+type: standard
+
+# Raw Modbus/TCP, not a web page.
+connection_info: EVENT_HOST 8007
+
+flags:
+  - BarSides{plcs_will_tell_anyone_who_asks}
+
+tags:
+  - beginner
+  - modbus
+  - plc
+
+files:
+  - files/tag_list.csv
+  - files/modbus_read.py
+
+hints:
+  - content: "Modbus programs count addresses from zero, but tag sheets usually use 40001-style numbers. Holding register 40001 is address 0, so 40101 is address 100. Try: python3 modbus_read.py EVENT_HOST 8007 holding 100 24"
+    cost: 0
+  - content: "Each register holds two bytes. 0x4261 is the bytes 0x42 0x61, which are the letters B and a. CyberChef's From Hex turns the whole hex column into text."
+    cost: 10
+
+requirements: []
+
+state: visible
+version: "1.0"

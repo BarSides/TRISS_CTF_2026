@@ -1,0 +1,7 @@
+services:
+  challenge:
+    build: .
+    image: triss2026/ics-beginner
+    ports:
+      - "8007:5020"
+    restart: unless-stopped
