@@ -29,10 +29,14 @@ Each category has a Beginner, Intermediate and Advanced slot:
 | Lockpicking | TBD | TBD | TBD |
 | Misc | TBD | TBD | TBD |
 | Rev | TBD | TBD | TBD |
-| Steganography | TBD | TBD | TBD |
+| Steganography | Ghost Sign | Nesting Dolls | Scatter Shot |
 | Web | TBD | TBD | TBD |
 
 Every slot starts as a placeholder with `state: hidden` and the flag `BarSides{CHANGE_ME}`. A challenge is ready when its README and `challenge.yml` are filled in, the flag is real, and `state` is `visible`.
+
+Update the table above in the same PR that adds or renames a challenge.
+
+Players need Python 3 (standard library only) for Cryptography Advanced and Steganography Advanced; everything else is solvable with the local CyberChef or common tools.
 
 To add a category, copy `_template/` into `<Category>/<Tier>/` for each tier.
 
