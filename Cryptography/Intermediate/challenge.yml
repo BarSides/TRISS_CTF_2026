@@ -1,30 +1,38 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Cryptography Intermediate (TBD)"
-author: "TBD"
+name: "Bridge Keeper's Revenge"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Cryptography"
 description: |-
-  TBD
+  The Bridge Keeper is back, and this time they say a simple shift won't save you.
+  Our analysts think every letter was multiplied by a secret number and then
+  shifted by another before being written down.
+
+  Brute-forcing the shift won't work this time, but you already know how the flag starts...
+
+  Flag format: BarSides{...}
 value: 250
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{multiply_then_shift}
 
 tags:
   - intermediate
+  - classical
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/bridge_keeper_2.txt
 
-hints: []
+hints:
+  - content: "Multiply, then shift: number the letters A=0 to Z=25, then cipher = (a * plain + b) mod 26. This is called an affine cipher."
+    cost: 0
+  - content: "The line NipUwxcu{...} is the flag, so N is B and i is a. The letter a is 0, so its cipher letter i gives you b directly."
+    cost: 25
+  - content: "a = 5 and b = 8. Use CyberChef's Affine Cipher Decode."
+    cost: 75
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
