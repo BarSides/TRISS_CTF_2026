@@ -27,7 +27,7 @@ Each category has a Beginner, Intermediate and Advanced slot:
 | Cryptography | Steel City Shift | Bridge Keeper's Revenge | The Bridge Keeper's Last Note |
 | Forensics | Rigged Race | Forgot to Clear History | Keys to the Incline |
 | ICS | Pump Station Gossip | Open the Flood Gate | Crack the Vault |
-| Misc | TBD | TBD | TBD |
+| Misc | Box Score | TBD | TBD |
 | Rev | Skip the Line | Twirl the Towel | Blow on the Cartridge |
 | Steganography | Ghost Sign | Nesting Dolls | Scatter Shot |
 | Web | Staff Only | 446 Bridges | Link Preview |
@@ -36,7 +36,7 @@ Every slot starts as a placeholder with `state: hidden` and the flag `BarSides{C
 
 Update the table above in the same PR that adds or renames a challenge.
 
-Players need Python 3 (standard library only) for Cryptography Advanced, Steganography Advanced, Forensics Advanced, and the ICS challenges (a small Modbus client is attached to each; mbpoll or pymodbus also work). Forensics Beginner and Advanced need Wireshark (or tshark), and Forensics Intermediate needs a SQLite reader (DB Browser for SQLite, `sqlite3`, or Python's built-in module). The Rev challenges are Linux programs, so they need Linux or WSL plus Ghidra (gdb or ltrace also work for Beginner); Rev Intermediate and Advanced also expect players to write a little Python. Most of these ship with Kali, but tell players to install them before arriving, since nothing can be downloaded at the venue. Everything else is solvable with the local CyberChef or common tools.
+Players need Python 3 (standard library only) for Cryptography Advanced, Steganography Advanced, Forensics Advanced, and the ICS challenges (a small Modbus client is attached to each; mbpoll or pymodbus also work). Forensics Beginner and Advanced need Wireshark (or tshark), and Forensics Intermediate needs a SQLite reader (DB Browser for SQLite, `sqlite3`, or Python's built-in module). The Rev challenges are Linux programs, so they need Linux or WSL plus Ghidra (gdb or ltrace also work for Beginner); Rev Intermediate and Advanced also expect players to write a little Python. Most of these ship with Kali, but tell players to install them before arriving, since nothing can be downloaded at the venue. Misc Beginner needs a spreadsheet app (Excel or LibreOffice Calc), though unzipping the file also works. Everything else is solvable with the local CyberChef or common tools.
 
 To add a category, copy `_template/` into `<Category>/<Tier>/` for each tier.
 
