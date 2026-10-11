@@ -4,7 +4,7 @@ Head Scratcher
 
 ## Author
 
-@darius
+@DariusGasior
 
 ## Overview
 
