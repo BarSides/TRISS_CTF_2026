@@ -1,31 +1,46 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Pwn Intermediate (TBD)"
-author: "TBD"
+name: "Skybox"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Pwn"
 description: |-
-  TBD
-# Beginner 100, Intermediate 250, Advanced 500 (numbered slots like "Beginner 1" use their tier's value)
+  The suite level at Acrisure Stadium has its own access terminal. Punch in
+  your code and it decides whether you belong up there. The code goes into a
+  fixed-size buffer with no bounds check, so a long enough entry runs off the
+  end and over the address the program planned to return to. Somewhere in the
+  binary is an open_skybox routine the normal path never calls -- point the
+  return address at it and the suite is yours.
+
+  The exact binary the server runs is attached.
+
+  Connect with: nc EVENT_HOST 8013
+
+  Flag format: BarSides{...}
 value: 250
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: EVENT_HOST PORT
+# Raw TCP line service (socat), not a web page.
+connection_info: EVENT_HOST 8013
 
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{returned_to_the_skybox}
 
 tags:
   - intermediate
+  - pwn
+  - ret2win
+  - buffer-overflow
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/skybox
 
-hints: []
+hints:
+  - content: "There is a function (open_skybox) that prints the flag but is never called. Find its address with nm, objdump, or Ghidra, then overflow the input so the program returns into it."
+    cost: 0
+  - content: "The return address sits 72 bytes into your input. In Python: pwn-style payload b'A'*72 + p64(address_of_open_skybox). The binary is not PIE, so the address is fixed; no canary is in the way."
+    cost: 25
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
