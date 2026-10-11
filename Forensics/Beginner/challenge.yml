@@ -1,30 +1,36 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Forensics Beginner (TBD)"
-author: "TBD"
+name: "Rigged Race"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Forensics"
 description: |-
-  TBD
+  Somebody leaked the winner of Thursday's Great Pierogi Race before the
+  race was even run. The stadium's security team pulled a packet capture
+  from the in-game entertainment office around the time it happened.
+
+  Find out what was downloaded and recover the leaked results.
+
+  Flag format: BarSides{...}
 value: 100
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{plain_http_spills_the_pierogies}
 
 tags:
   - beginner
+  - pcap
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/stadium_office.pcap
 
-hints: []
+hints:
+  - content: "Open the capture in Wireshark and type http in the display filter bar. Which files did the office computer ask the server for?"
+    cost: 0
+  - content: "Wireshark can save every file sent over plain HTTP: File > Export Objects > HTTP. Open the image that came from the /private folder."
+    cost: 10
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
