@@ -1,30 +1,41 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Steganography Advanced (TBD)"
-author: "TBD"
+name: "Scatter Shot"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Steganography"
 description: |-
-  TBD
+  We finally caught a break on The Bridge Keeper. A voicemail they left us is
+  just a little chime tune, but their seized laptop had a script called
+  scatter.py sitting next to it. Looks like they hid something in the audio
+  and locked it with a PIN. They never told us the PIN.
+
+  You'll want Python 3 for this one (standard library only).
+
+  Flag format: BarSides{...}
 value: 500
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{four_digits_is_not_a_key}
 
 tags:
   - advanced
+  - audio
+  - python
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/voicemail.wav
+  - files/scatter.py
 
-hints: []
+hints:
+  - content: "Read scatter.py closely. Everything you need to undo it is there except the PIN. How many 4-digit PINs are there?"
+    cost: 0
+  - content: "Write an unhide(): rebuild the same PRNG and positions() for a PIN, read the low bit of each chosen sample (low byte first, 2 bytes per sample), and rebuild bytes most significant bit first. The first 2 bytes are the message length."
+    cost: 50
+  - content: "You know the message starts with BarSides{. For each PIN from 0000 to 9999, decode only the first 11 bytes and check for that prefix. That takes well under a second in Python."
+    cost: 100
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
