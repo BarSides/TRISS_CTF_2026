@@ -1,30 +1,34 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Cryptography Beginner (TBD)"
-author: "TBD"
+name: "Steel City Shift"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Cryptography"
 description: |-
-  TBD
+  We intercepted a note left by someone calling themselves "The Bridge Keeper".
+  It looks like gibberish, but the punctuation and line breaks look an awful lot
+  like a normal letter. Can you read it?
+
+  Flag format: BarSides{...}
 value: 100
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{three_rivers_one_shift}
 
 tags:
   - beginner
+  - classical
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/bridge_keeper.txt
 
-hints: []
+hints:
+  - content: "Every letter has been moved the same number of places down the alphabet. There are only 25 possibilities."
+    cost: 0
+  - content: "In CyberChef, try the ROT13 Brute Force operation. You know the flag starts with BarSides, so put that in the Crib box."
+    cost: 10
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"

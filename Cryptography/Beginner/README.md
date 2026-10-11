@@ -1,20 +1,19 @@
 # Name
 
-TBD
+Steel City Shift
 
 ## Author
 
-@TBD
+@justinforbes
 
 ## Overview
 
-TBD. This text is shown to players as the challenge description.
+We intercepted a note left by someone calling themselves "The Bridge Keeper". It looks like gibberish, but the punctuation and line breaks look an awful lot like a normal letter. Can you read it?
 
 ## Setup
 
-TBD. For a file challenge, name the file in `files/` to attach in CTFd.
-For a hosted challenge, `docker compose up -d` and give players the address and port.
+Attach `files/bridge_keeper.txt` as a CTFd download. No hosted service is needed. Players can solve it with the local CyberChef (ROT13 Brute Force) or by hand.
 
 ## Flag
 
-BarSides{CHANGE_ME}
+BarSides{three_rivers_one_shift}
