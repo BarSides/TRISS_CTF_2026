@@ -27,7 +27,6 @@ Each category has a Beginner, Intermediate and Advanced slot:
 | Cryptography | Steel City Shift | Bridge Keeper's Revenge | The Bridge Keeper's Last Note |
 | Forensics | TBD | TBD | TBD |
 | ICS | Pump Station Gossip | Open the Flood Gate | Crack the Vault |
-| Lockpicking | TBD | TBD | TBD |
 | Misc | TBD | TBD | TBD |
 | Rev | TBD | TBD | TBD |
 | Steganography | Ghost Sign | Nesting Dolls | Scatter Shot |
