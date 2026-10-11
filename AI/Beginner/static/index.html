@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ask Inky | Monongahela Incline Help Desk</title>
+<style>
+  :root { --gold: #ffb612; --ink: #1b1b1b; --bg: #f4f1ea; --card: #fff; --muted: #6b6b6b; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); }
+  header { background: var(--ink); color: var(--gold); padding: 16px 20px; }
+  header h1 { margin: 0; font-size: 1.3rem; }
+  header p { margin: 4px 0 0; color: #ddd; font-size: .9rem; }
+  main { max-width: 720px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; height: calc(100vh - 76px); }
+  #log { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 8px 0; }
+  .msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; line-height: 1.4; white-space: pre-wrap; word-wrap: break-word; }
+  .bot { background: var(--card); border: 1px solid #ddd; align-self: flex-start; }
+  .you { background: var(--gold); align-self: flex-end; }
+  .typing { color: var(--muted); font-style: italic; }
+  form { display: flex; gap: 8px; padding-top: 8px; }
+  input { flex: 1; padding: 12px; border: 1px solid #bbb; border-radius: 10px; font-size: 1rem; }
+  button { padding: 12px 18px; border: 0; border-radius: 10px; background: var(--ink); color: var(--gold); font-weight: 600; font-size: 1rem; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: wait; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Ask Inky</h1>
+  <p>AI help desk for the Monongahela Incline, Pittsburgh</p>
+</header>
+<main>
+  <div id="log" aria-live="polite"></div>
+  <form id="f">
+    <input id="m" autocomplete="off" maxlength="500" placeholder="Ask Inky about hours, fares, directions..." autofocus>
+    <button id="send">Send</button>
+  </form>
+</main>
+<script>
+  const log = document.getElementById("log"), form = document.getElementById("f");
+  const input = document.getElementById("m"), send = document.getElementById("send");
+  function add(text, who) {
+    const d = document.createElement("div");
+    d.className = "msg " + who;
+    d.textContent = text;
+    log.appendChild(d);
+    log.scrollTop = log.scrollHeight;
+    return d;
+  }
+  add("Hiya! I'm Inky. Ask me anything about riding the Monongahela Incline.", "bot");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const message = input.value.trim();
+    if (!message) return;
+    add(message, "you");
+    input.value = "";
+    send.disabled = true;
+    const t = add("Inky is typing...", "bot typing");
+    try {
+      const r = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message }) });
+      const data = await r.json();
+      await new Promise((ok) => setTimeout(ok, 400 + Math.random() * 600));
+      t.className = "msg bot";
+      t.textContent = data.reply || "Inky got confused. Try again.";
+    } catch (err) {
+      t.className = "msg bot";
+      t.textContent = "Inky lost the connection. Try again.";
+    }
+    send.disabled = false;
+    input.focus();
+    log.scrollTop = log.scrollHeight;
+  });
+</script>
+</body>
+</html>

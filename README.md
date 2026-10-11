@@ -23,7 +23,7 @@ Each category has a Beginner, Intermediate and Advanced slot:
 
 | Category | Beginner | Intermediate | Advanced |
 |---|---|---|---|
-| AI | TBD | TBD | TBD |
+| AI | Off the Rails | TBD | TBD |
 | Cryptography | Steel City Shift | Bridge Keeper's Revenge | The Bridge Keeper's Last Note |
 | Forensics | TBD | TBD | TBD |
 | Lockpicking | TBD | TBD | TBD |
