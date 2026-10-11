@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A traffic cone standing in a pothole. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- the pothole -->
+    <path android:fillColor="#FF3A3A3A"
+        android:pathData="M22,80 Q24,72 38,71 Q54,68 70,71 Q86,72 86,80 Q84,88 68,89 Q54,91 38,89 Q22,88 22,80 Z" />
+    <!-- base -->
+    <path android:fillColor="#FFFFB612" android:pathData="M32,78 L76,78 L76,84 L32,84 Z" />
+    <!-- cone body -->
+    <path android:fillColor="#FFFFB612" android:pathData="M48,24 L60,24 L72,78 L36,78 Z" />
+    <!-- reflective stripes -->
+    <path android:fillColor="#FFF2F2F2" android:pathData="M45.5,40 L62.5,40 L64.3,48 L43.7,48 Z" />
+    <path android:fillColor="#FFF2F2F2" android:pathData="M41.6,58 L66.4,58 L68.2,66 L39.8,66 Z" />
+</vector>
