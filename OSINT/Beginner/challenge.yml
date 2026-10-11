@@ -1,0 +1,41 @@
+# ctfcli challenge spec: https://github.com/CTFd/ctfcli
+name: "Lost Badge"
+author: "justinforbes"
+attribution: "BarSides"
+category: "OSINT"
+description: |-
+  After last week's BarSides meetup at Stinky's Bar & Grill in Lawrenceville,
+  somebody left their TRISS 2026 speaker badge on the bar. BarSides posted a
+  photo of it on Yinzr, the local social network, and the bartender will only
+  hand it back for the claim code printed on the back.
+
+  Speakers are terrible at keeping secrets. Track down the badge's owner on
+  Yinzr and find the claim code.
+
+  There's no Internet here, so Yinzr is the whole world for this one.
+
+  Flag format: BarSides{...}
+value: 100
+type: standard
+
+connection_info: http://EVENT_HOST:8012
+
+flags:
+  - BarSides{pivot_on_the_handle}
+
+tags:
+  - beginner
+  - osint
+
+files: []
+
+hints:
+  - content: "Look closely at the badge in BarSides' photo. A thumb is hiding the end of the owner's Yinzr handle, but the start is enough to search for."
+    cost: 0
+  - content: "More than one account fits the badge. Read their posts: which one was actually at Stinky's on the night of the meetup?"
+    cost: 10
+
+requirements: []
+
+state: visible
+version: "1.0"
