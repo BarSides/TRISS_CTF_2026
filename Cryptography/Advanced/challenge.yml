@@ -1,30 +1,41 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Cryptography Advanced (TBD)"
-author: "TBD"
+name: "The Bridge Keeper's Last Note"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Cryptography"
 description: |-
-  TBD
+  The Bridge Keeper's final note has arrived, and they've stopped disguising single letters.
+  Our analysts believe letters are now locked together two at a time and mixed with a
+  small key matrix before being written down. Frequency analysis is useless, and so is
+  brute-forcing a shift.
+
+  Luckily the Bridge Keeper still signs off every claim code the same way...
+
+  Only the letters were encrypted: spaces, punctuation and capital letters are where they were.
+
+  Flag format: BarSides{...}
 value: 500
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{two_by_two_matrix_mod_twenty_six}
 
 tags:
   - advanced
+  - classical
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/bridge_keeper_3.txt
 
-hints: []
+hints:
+  - content: "Two letters at a time, mixed with a matrix: look up the Hill cipher. Letters are A=0 to Z=25, and the letter stream ignores spaces and punctuation."
+    cost: 0
+  - content: "DcbUhfou is BarSides, which gives you four plaintext/ciphertext pairs (ba->dc, rs->bu, id->hf, es->ou). The pair ba = (1, 0) hands you the first column of the key for free."
+    cost: 50
+  - content: "There are only 26^4 = 456,976 possible 2x2 keys. A Python loop that tries each invertible one and looks for BarSides{ finishes in seconds."
+    cost: 100
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
