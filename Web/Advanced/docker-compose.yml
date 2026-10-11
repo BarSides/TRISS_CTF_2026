@@ -1,0 +1,7 @@
+services:
+  challenge:
+    build: .
+    image: triss2026/web-advanced
+    ports:
+      - "8006:8000"
+    restart: unless-stopped
