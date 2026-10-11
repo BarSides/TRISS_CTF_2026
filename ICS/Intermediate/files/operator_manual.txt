@@ -1,0 +1,31 @@
+LAWRENCEVILLE FLOOD GATE -- OPERATOR MANUAL (excerpt)
+Herrs Island Flood Control -- City of Pittsburgh
+Controller: Modbus/TCP, unit 1
+
+TAG LIST
+  Coil 00001  Gate OPEN command
+  Coil 00002  Maintenance mode
+  40001       Gate position (percent, 0 = closed, 100 = open) -- read only
+  40002       Local/Remote key switch (0x1977 = REMOTE)
+  40003       High-water alarm level (0.1 ft)
+  40011       Operator passcode entry
+  Input 10001 Control power OK
+  Input 10002 Gate fully closed
+  Input 10003 Interlock tripped (1 = tripped, blocks the gate)
+
+OPENING THE GATE IN AN EMERGENCY
+  The gate will not travel while the safety interlock is tripped. To clear
+  the interlock and open the gate, follow the steps IN ORDER from a remote
+  client:
+
+    1. Confirm the key switch (40002) reads REMOTE (0x1977). If it does not,
+       turn the panel key to REMOTE.
+    2. Engage Maintenance mode: set Coil 00002 ON. (This clears the
+       interlock -- Input 10003 drops to 0.)
+    3. Enter the shift passcode into register 40011. The passcode for 2026
+       is the year Herrs Island's rail bridge opened: 1878.
+    4. Give the OPEN command: set Coil 00001 ON.
+
+  When all four conditions hold, the gate drives to 100% and the controller
+  posts the maintenance release note into registers 40201 and up (ASCII,
+  two characters per register). Read it back to confirm the gate released.
