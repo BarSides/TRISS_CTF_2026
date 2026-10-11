@@ -1,30 +1,39 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Forensics Intermediate (TBD)"
-author: "TBD"
+name: "Forgot to Clear History"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Forensics"
 description: |-
-  TBD
+  Dana, an engineer at Steel City Signal Co., resigned on Tuesday and
+  started at a competitor the following week. The next day, our confidential
+  bid numbers turned up in the competitor's proposal.
+
+  Dana's work laptop was wiped before IT could image it, but a backup of
+  the Firefox profile survived. Work out how the secret left the building
+  and recover what was sent.
+
+  Flag format: BarSides{...}
 value: 250
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{the_recipe_was_in_the_url}
 
 tags:
   - intermediate
+  - browser
+  - sqlite
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/dkowalski_firefox_profile.zip
 
-hints: []
+hints:
+  - content: "Firefox keeps its history in places.sqlite and anything typed into web forms in formhistory.sqlite. Open them with DB Browser for SQLite, the sqlite3 command line tool, or Python's built-in sqlite3 module."
+    cost: 0
+  - content: "Something was pasted into a burn-after-reading site, but it doesn't look like a flag. Look at what Dana did in CyberChef just before pasting. CyberChef stores the whole recipe in the page URL."
+    cost: 25
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
