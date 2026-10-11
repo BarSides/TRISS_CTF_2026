@@ -1,30 +1,42 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Forensics Advanced (TBD)"
-author: "TBD"
+name: "Keys to the Incline"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Forensics"
 description: |-
-  TBD
+  The cash fares at the incline ticket office haven't added up for months.
+  Investigators suspected the office manager and plugged a USB sniffer in
+  between the office PC and its keyboard and mouse.
+
+  By the time they seized the PC, the evidence had been zipped up with a
+  password and the original deleted. All they have is the sniffer's capture
+  and the encrypted zip. What was in it?
+
+  Flag format: BarSides{...}
 value: 500
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{arrow_keys_rewrite_history}
 
 tags:
   - advanced
+  - usb
+  - pcap
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/keyboard.pcap
+  - files/vault.zip
 
-hints: []
+hints:
+  - content: "Two USB devices are in the capture. Keyboards send 8-byte HID reports: byte 0 holds the modifier keys (Shift is 0x02 or 0x20) and bytes 2 to 7 hold the key usage IDs. Look up the USB HID Usage Tables for the keyboard page."
+    cost: 0
+  - content: "tshark -r keyboard.pcap -Y 'usb.device_address==2 && usb.urb_type==67' -T fields -e usb.capdata gets you the keyboard reports. The password was typed twice, and both times should decode to the same thing."
+    cost: 50
+  - content: "Usage 0x2A is Backspace, 0x50 is Left Arrow, 0x4F is Right Arrow and 0x4D is End. Keep track of where the cursor is, not just which keys were pressed."
+    cost: 100
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
