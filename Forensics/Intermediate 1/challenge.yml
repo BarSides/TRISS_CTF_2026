@@ -1,10 +1,14 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
 name: "Head Scratcher"
-author: "@darius"
+author: "DariusGasior"
 attribution: "BarSides"
 category: "Forensics"
 description: |-
-  We found an infostealer on a workstation. Traffic to an unauthorized DNS server was captured before the workstation was isolated. We have been unable to determine what might have been leaked.
+  We found an infostealer on a workstation. Traffic to an unauthorized DNS
+  server was captured before the workstation was isolated. We have been
+  unable to determine what might have been leaked.
+
+  Flag format: BarSides{...}
 value: 250
 type: standard
 
@@ -13,6 +17,8 @@ flags:
 
 tags:
   - intermediate
+  - dns
+  - pcap
 
 files:
   - files/challenge.pcap
@@ -23,6 +29,5 @@ hints:
 
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
