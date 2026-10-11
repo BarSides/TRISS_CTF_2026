@@ -1,12 +1,17 @@
-# Lost Badge walkthrough
+# Where Was This? walkthrough
 
-1. Open `http://EVENT_HOST:8012`. The home feed has BarSides' post about the badge left at Stinky's, with a photo.
-2. Look at the badge: TRISS 2026, SPEAKER, "Rosie K.", talk "Rust Belt Red Teaming", and `Yinzr: @pierogi_` with a thumb over the end of the handle.
-3. Search people for `pierogi`. Five accounts come back: `@pierogi_packets`, `@pierogi_payloads`, `@pierogi_pat`, `@pierogi_pals`, `@pierogi_parade`.
-4. Rule out the obvious ones: a pierogi race fan, a food blog and a marching band. Two accounts are TRISS speakers named Rosie.
-5. Corroborate with the meetup date (October 15, the night before BarSides' post):
-   - `@pierogi_payloads` (Rosie Kaminski, Columbus) posted "Stuck in Columbus all week... missing the BarSides meetup tonight" on October 15, and says their badge is still in their bag.
-   - `@pierogi_packets` (Rosie K., Lawrenceville) posted "Dry-running my TRISS talk at the BarSides meetup at Stinky's" at 7:12pm on October 15, and "Woke up with no speaker badge" the next morning. Their slides post also names the talk on the badge, Rust Belt Red Teaming.
-6. `@pierogi_packets` pinned a note to self with the claim code: `BarSides{pivot_on_the_handle}`.
+1. Load `pregame.jpg` into CyberChef and run **Extract EXIF** (or `exiftool -n pregame.jpg`).
+2. The output includes:
+   ```
+   Model: Pixel 8
+   GPSLatitudeRef: N
+   GPSLatitude: 40.47768333333334
+   GPSLongitudeRef: W
+   GPSLongitude: -79.95771666666667
+   ```
+   (Tools that print degrees, minutes and seconds show 40° 28' 39.66" N, 79° 57' 27.78" W. Decimal = degrees + minutes/60 + seconds/3600, and west is negative.)
+3. Open `lawrenceville_map.png`. Latitude 40.4777 sits just above the 40.4775 line, almost two faint lines up. Longitude -79.9577 is between the -79.9580 and -79.9575 lines, almost three faint lines east of -79.9580.
+4. That point is inside the lot numbered **4901**, on the river side of **Hatfield St** at the corner of 49th St.
+5. Flag: `BarSides{4901_hatfield_street}` (`BarSides{4901_hatfield_st}` also works).
 
-Lesson: a partial username is enough to pivot on, but always confirm the match with something independent (here, where the person was that night) before trusting it. And don't post your secrets, even as a note to self.
+It's Stinky's Bar & Grill, where BarSides meets. Lesson: unless the app strips it, a phone photo's EXIF can give away exactly where you were standing.

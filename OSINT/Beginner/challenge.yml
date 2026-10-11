@@ -1,38 +1,43 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Lost Badge"
+name: "Where Was This?"
 author: "justinforbes"
 attribution: "BarSides"
 category: "OSINT"
 description: |-
-  After last week's BarSides meetup at Stinky's Bar & Grill in Lawrenceville,
-  somebody left their TRISS 2026 speaker badge on the bar. BarSides posted a
-  photo of it on Yinzr, the local social network, and the bartender will only
-  hand it back for the claim code printed on the back.
+  The night before TRISS, one of the BarSides crew posted this photo with the
+  caption "Pre-game's here, come find us." No bar name, no address, no reply
+  to anyone asking where "here" is.
 
-  Speakers are terrible at keeping secrets. Track down the badge's owner on
-  Yinzr and find the claim code.
+  Phones remember more than people say. Work out the street address where the
+  photo was taken. There's no Internet at the venue, so a map of the
+  neighborhood is attached.
 
-  There's no Internet here, so Yinzr is the whole world for this one.
-
-  Flag format: BarSides{...}
+  Flag format: BarSides{housenumber_streetname} in lowercase,
+  for example BarSides{1234_example_street}
 value: 100
 type: standard
 
-connection_info: http://EVENT_HOST:8012
-
 flags:
-  - BarSides{pivot_on_the_handle}
+  - type: static
+    content: BarSides{4901_hatfield_street}
+    data: case_insensitive
+  - type: static
+    content: BarSides{4901_hatfield_st}
+    data: case_insensitive
 
 tags:
   - beginner
   - osint
+  - exif
 
-files: []
+files:
+  - files/pregame.jpg
+  - files/lawrenceville_map.png
 
 hints:
-  - content: "Look closely at the badge in BarSides' photo. A thumb is hiding the end of the owner's Yinzr handle, but the start is enough to search for."
+  - content: "Photos from phones usually carry EXIF metadata, sometimes including GPS. CyberChef's Extract EXIF operation reads it, as do exiftool and most image viewers' properties panels."
     cost: 0
-  - content: "More than one account fits the badge. Read their posts: which one was actually at Stinky's on the night of the meetup?"
+  - content: "GPSLatitude and GPSLongitude are decimal degrees. Find the lines on the map just either side of each value, and the faint lines every 0.0001 degrees narrow it down to a single lot."
     cost: 10
 
 requirements: []

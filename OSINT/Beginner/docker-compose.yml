@@ -1,7 +1,0 @@
-services:
-  challenge:
-    build: .
-    image: triss2026/osint-beginner
-    ports:
-      - "8012:8000"
-    restart: unless-stopped
