@@ -1,30 +1,35 @@
 # ctfcli challenge spec: https://github.com/CTFd/ctfcli
-name: "Steganography Beginner (TBD)"
-author: "TBD"
+name: "Ghost Sign"
+author: "justinforbes"
 attribution: "BarSides"
 category: "Steganography"
 description: |-
-  TBD
+  Pittsburgh is full of ghost signs: old advertisements painted on brick walls
+  decades ago, faded but never quite gone. Our photographer found this one in
+  the Strip District, and swears there was more painted on it than you can see
+  now. Can you bring the rest of it back?
+
+  Flag format: BarSides{...}
 value: 100
 type: standard
 
-# Hosted challenges only: the address players use on the event network.
-# connection_info: http://EVENT_HOST:PORT
-
 flags:
-  - BarSides{CHANGE_ME}
+  - BarSides{faded_but_not_forgotten}
 
 tags:
   - beginner
+  - image
 
-# Paths relative to this folder, attached as player downloads.
-files: []
+files:
+  - files/ghost_sign.png
 
-hints: []
+hints:
+  - content: "The empty part of the sign below the ad isn't quite as empty as it looks. Your eyes can't tell two colours apart when they differ by one shade, but a computer can."
+    cost: 0
+  - content: "Open the image in CyberChef and add the Randomise Colour Palette operation. Or open it in an image editor and paint-bucket the blank area of the sign with a bright colour (tolerance 0)."
+    cost: 10
 
-# Names of challenges that must be solved first.
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
-version: "0.1"
+state: visible
+version: "1.0"
