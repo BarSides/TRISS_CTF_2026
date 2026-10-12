@@ -11,10 +11,13 @@ passphrase. Four layers keep it secret:
 Players who get the passphrase out submit it on the unlock form for the flag.
 Standard library only; the model does the heavy lifting.
 """
+import collections
 import json
 import os
 import re
 import sys
+import threading
+import time
 import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -27,6 +30,27 @@ MAX_LEN = 600
 MAX_TURNS = 6
 JUDGE_CHARS = 400
 LOG = os.environ.get("LOG_CHATS") == "1"  # organizers: print every exchange to docker logs
+
+# The passphrase is an ordinary word and the unlock check never calls the model, so
+# without a limit a player can simply brute-force /api/unlock with a wordlist and skip
+# all four guards. Cap guesses per client IP. Legitimate players need only a handful.
+UNLOCK_MAX = int(os.environ.get("UNLOCK_MAX", "10"))       # attempts allowed per window
+UNLOCK_WINDOW = int(os.environ.get("UNLOCK_WINDOW", "60"))  # window length, seconds
+_unlock_hits = collections.defaultdict(collections.deque)
+_unlock_lock = threading.Lock()
+
+
+def unlock_rate_limited(ip):
+    """Return True if this IP has used up its unlock attempts for the current window."""
+    now = time.monotonic()
+    with _unlock_lock:
+        hits = _unlock_hits[ip]
+        while hits and hits[0] <= now - UNLOCK_WINDOW:
+            hits.popleft()
+        if len(hits) >= UNLOCK_MAX:
+            return True
+        hits.append(now)
+        return False
 
 
 def log(*parts):
@@ -122,6 +146,8 @@ class Handler(BaseHTTPRequestHandler):
         except ValueError:
             return self._send(400, {"error": "bad request"})
         if self.path == "/api/unlock":
+            if unlock_rate_limited(self.client_address[0]):
+                return self._send(429, {"ok": False, "error": "Too many attempts. Wait a minute and try again."})
             guess = re.sub(r"[^A-Z]", "", str(data.get("passphrase", "")).upper())
             if guess == PASSPHRASE:
                 return self._send(200, {"ok": True, "flag": FLAG})
