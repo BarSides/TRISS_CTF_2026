@@ -55,6 +55,16 @@ class Handler(socketserver.StreamRequestHandler):
     def handle(self):
         self.connection.settimeout(300)
         resource.setrlimit(resource.RLIMIT_AS, (256 << 20, 256 << 20))
+        # The string-glue that beats the word filter also reaches os.fork, and the
+        # container's pids_limit is shared by every player, so one fork bomb could
+        # deny the whole field. RLIMIT_AS and alarm() bound memory and CPU but not
+        # process count. Forbid this connection (and anything it eval's) from
+        # spawning any process at all; the intended solve never forks.
+        try:
+            _, nproc_hard = resource.getrlimit(resource.RLIMIT_NPROC)
+            resource.setrlimit(resource.RLIMIT_NPROC, (0, nproc_hard))
+        except (ValueError, OSError):
+            pass
         self.wfile.write(BANNER)
         while True:
             self.wfile.write(b"\nscore> ")
