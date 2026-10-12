@@ -47,12 +47,15 @@ format string to `printf`, `%n` lets you write to memory, not just read it.
 
 Notes:
 
-- By hand the write is `%<N>c%6$n`-style: print exactly 1337 characters, then
-  `%n` stores the running count at the address you placed on the stack. On
-  64-bit the target address has null bytes, so it goes at the *end* of the
-  payload and is reached with a positional specifier (`%6$`). pwntools'
-  `fmtstr_payload` handles the padding, chunking and placement for you, which
-  is why it is the tool of choice here.
+- By hand the write is `%<N>c%<k>$n`-style: print exactly 1337 characters, then
+  `%n` stores the running count at the address you placed on the stack. The
+  format string itself starts at argument offset 6, but on 64-bit the target
+  address has null bytes, so it goes at the *end* of the payload and is reached
+  with the positional specifier for wherever it actually lands (a slot or two
+  past 6, once the leading directives and padding are counted; `%8$n` in a
+  typical build). pwntools' `fmtstr_payload(6, ...)` computes that index and
+  handles the padding, chunking and placement for you, which is why it is the
+  tool of choice here.
 - No PIE means `override` has a fixed address, so no leak of the binary base
   is needed; no canary is involved because nothing is overflowed.
 - This is the final step of the Pwn series: Beginner overwrote an adjacent
