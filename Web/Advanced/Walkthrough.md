@@ -11,6 +11,8 @@ PghChat fetches a URL on its server and shows the result. That means the fetch r
    - `http://2130706433/` (127.0.0.1 as a single decimal number)
    - `http://[::1]/` (IPv6 loopback)
    - `http://127.0.0.1./` (trailing dot)
+   - `http://0.0.0.0/`
+   - `http://0177.0.0.1/` (127.0.0.1 in octal)
 
    Any of these reaches the admin console:
 

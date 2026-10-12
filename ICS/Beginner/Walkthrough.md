@@ -6,7 +6,7 @@
    ```
    python3 modbus_read.py EVENT_HOST 8007 holding 100 24
      100  16993  0x4261
-     101  21353  0x5369
+     101  29267  0x7253
      ...
    ```
 
