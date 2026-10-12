@@ -6,7 +6,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends socat \
     && rm -rf /var/lib/apt/lists/*
 
-RUN useradd -m -u 1000 ctf
+RUN useradd -m ctf
 WORKDIR /app
 
 COPY files/will_call /app/will_call
