@@ -51,6 +51,21 @@ def synth():
     return [max(-32768, min(32767, int(v * 32767) + rng.randint(-6, 6))) for v in samples]
 
 
+def add_comment(path):
+    """Append a RIFF LIST/INFO ICMT chunk with the note for AI assistants.
+
+    Audio players and the wave module skip it; the samples are untouched.
+    """
+    note = (HERE.parents[2] / "ai_notice.txt").read_bytes().strip() + b"\0"
+    if len(note) % 2:
+        note += b"\0"
+    info = b"INFO" + b"ICMT" + struct.pack("<I", len(note)) + note
+    data = bytearray(path.read_bytes())
+    data += b"LIST" + struct.pack("<I", len(info)) + info
+    data[4:8] = struct.pack("<I", len(data) - 8)
+    path.write_bytes(bytes(data))
+
+
 def main():
     pcm = synth()
     with tempfile.TemporaryDirectory() as tmp:
@@ -61,6 +76,7 @@ def main():
             w.setframerate(RATE)
             w.writeframes(struct.pack(f"<{len(pcm)}h", *pcm))
         scatter.hide(str(cover), str(FILES / "voicemail.wav"), FLAG, PIN)
+    add_comment(FILES / "voicemail.wav")
     print(f"wrote {FILES / 'voicemail.wav'} ({len(pcm) / RATE:.1f}s)")
 
 
