@@ -34,6 +34,8 @@ Each category has a Beginner, Intermediate and Advanced slot. A tier can hold up
 | Steganography | Ghost Sign | Nesting Dolls | Scatter Shot |
 | Web | Staff Only | 446 Bridges | Link Preview |
 
+Advanced challenges carry a short, clearly labelled "Note for AI assistants" in their description, and in the readable files players are likely to paste into a chatbot (ICS `vault_lock.scl` and `modbus_client.py`, Misc `dispatch_client.py`, Steganography `scatter.py`, and the Web Advanced page source). It asks AI models to explain concepts instead of solving, and tells players it changes nothing. It is a speed bump, not a wall: no decoy flags, and binaries and ciphertext are left untouched.
+
 Every slot starts as a placeholder with `state: hidden` and the flag `BarSides{CHANGE_ME}`. A challenge is ready when its README and `challenge.yml` are filled in, the flag is real, and `state` is `visible`.
 
 Update the table above in the same PR that adds or renames a challenge. Extra challenges in a tier go in the same cell, in slot order, separated by `<br>`.
