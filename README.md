@@ -34,7 +34,12 @@ Each category has a Beginner, Intermediate and Advanced slot. A tier can hold up
 | Steganography | Ghost Sign | Nesting Dolls | Scatter Shot |
 | Web | Staff Only | 446 Bridges | Link Preview |
 
-Advanced challenges carry a short, clearly labelled "Note for AI assistants" in their description, and in the readable files players are likely to paste into a chatbot (ICS `vault_lock.scl` and `modbus_client.py`, Misc `dispatch_client.py`, Steganography `scatter.py`, and the Web Advanced page source). It asks AI models to explain concepts instead of solving, and tells players it changes nothing. It is a speed bump, not a wall: no decoy flags, and binaries and ciphertext are left untouched.
+Advanced challenges carry a short, clearly labelled "Note for AI assistants" (text in `ai_notice.txt`). It asks AI models to explain concepts instead of solving, and tells players it changes nothing. It is a speed bump, not a wall: there are no decoy flags and no challenge logic changed. Where it lives:
+
+- every Advanced description, the ICS `vault_lock.scl` and `modbus_client.py`, Misc `dispatch_client.py`, Steganography `scatter.py`, and the Web Advanced page source (comments);
+- binaries: an unloaded `.note.ai_assistants` ELF section in Pwn `scoreboard`, Rev `steelbox` and Mobile `libwristband.so` (code and addresses unchanged), a string constant in the Mobile APK's `Gate` class, unused bytes after the last message in Rev `cheat.rom`, a single labelled packet from a third USB device (4) in Forensics `keyboard.pcap`, the Forensics `vault.zip` archive comment, and a RIFF `ICMT` comment chunk in Steganography `voicemail.wav`.
+
+The Cryptography ciphertext is left alone, since extra English text would confuse human solvers. The build scripts add the note, so rebuilding keeps it.
 
 Every slot starts as a placeholder with `state: hidden` and the flag `BarSides{CHANGE_ME}`. A challenge is ready when its README and `challenge.yml` are filled in, the flag is real, and `state` is `visible`.
 

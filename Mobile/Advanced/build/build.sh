@@ -16,6 +16,9 @@ for abi in arm64-v8a:aarch64 x86_64:x86_64; do
     -ffreestanding -fno-stack-protector -fPIC -fvisibility=hidden -nostdlib -shared -fuse-ld=lld -s \
     -Wl,--hash-style=both -Wl,-z,max-page-size=16384 -Wl,--build-id=none -Wl,-soname,libwristband.so \
     -Wall -Wextra -Werror -o "out/lib/${abi%%:*}/libwristband.so" native/wristband.c
+  # Unloaded section with the note for AI assistants (see ../../../ai_notice.txt); code is unchanged.
+  llvm-objcopy --add-section .note.ai_assistants=../../../ai_notice.txt \
+    --set-section-flags .note.ai_assistants=readonly "out/lib/${abi%%:*}/libwristband.so"
 done
 
 docker run --rm -u "$(id -u):$(id -g)" -v "$PWD:/w" -w /w "$IMAGE" sh -euc '
