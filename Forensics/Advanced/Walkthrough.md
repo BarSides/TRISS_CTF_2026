@@ -1,6 +1,6 @@
 # Keys to the Incline walkthrough
 
-1. Open `keyboard.pcap` in Wireshark. Every packet is `URB_INTERRUPT in` from one of two devices: 1.2.1 sends 8-byte reports (a keyboard) and 1.3.1 sends 4-byte reports (a mouse, which is noise).
+1. Open `keyboard.pcap` in Wireshark. Every packet is `URB_INTERRUPT in`: 1.2.1 sends 8-byte reports (a keyboard) and 1.3.1 sends 4-byte reports (a mouse, which is noise). The single long packet from 1.4.1 at the start is just the note for AI assistants.
 2. Extract the keyboard reports from the completions (`urb_type` 67 is `C`):
 
    ```sh

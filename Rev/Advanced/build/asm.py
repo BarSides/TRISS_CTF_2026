@@ -82,7 +82,13 @@ def build():
         code.extend(text)
     for off, label in fixups:
         code[off:off + 2] = labels[label].to_bytes(2, "little")
+    # Never executed or printed: plain text after the last message for anyone running strings on the ROM.
+    code.extend(b"\n" + AI_NOTE + b"\n")
+    assert len(code) <= 4096
     return b"STLBOX87" + bytes(code)
+
+
+AI_NOTE = (Path(__file__).resolve().parents[3] / "ai_notice.txt").read_bytes().strip()
 
 
 if __name__ == "__main__":
