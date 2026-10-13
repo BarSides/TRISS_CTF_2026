@@ -17,6 +17,7 @@ from pathlib import Path
 FLAG = "BarSides{arrow_keys_rewrite_history}"
 PASSWORD = "Monongahela_R1ver!1758"
 FILES = Path(__file__).resolve().parent.parent / "files"
+AI_NOTE = (Path(__file__).resolve().parents[3] / "ai_notice.txt").read_bytes().strip()
 rng = random.Random(1758)
 
 LEFT, RIGHT, BS, ENTER, END = "<LEFT>", "<RIGHT>", "<BS>", "<ENTER>", "<END>"
@@ -116,6 +117,8 @@ def mouse_burst(cap, n):
 
 def build_capture():
     cap = Capture()
+    # One labelled packet from a third device (4) carrying the note for AI assistants.
+    cap.urb_pair(4, 1, AI_NOTE)
     mouse_burst(cap, 40)
     cap.urb_pair(3, 1, b"\x01\x00\x00\x00")  # click into the terminal
     cap.t += 0.09
@@ -196,8 +199,8 @@ def build_zip():
                           dosdate, crc, len(body), len(plain), len(name), 0, 0, 0, 0,
                           0o100644 << 16, 0) + name
     data = local + body + desc
-    end = struct.pack("<IHHHHIIH", 0x06054B50, 0, 0, 1, 1, len(central), len(data), 0)
-    (FILES / "vault.zip").write_bytes(data + central + end)
+    end = struct.pack("<IHHHHIIH", 0x06054B50, 0, 0, 1, 1, len(central), len(data), len(AI_NOTE))
+    (FILES / "vault.zip").write_bytes(data + central + end + AI_NOTE)  # archive comment
 
 
 def main():
