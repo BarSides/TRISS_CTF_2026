@@ -27,6 +27,5 @@ hints:
 
 requirements: []
 
-# Placeholders stay hidden. Set to visible when the challenge is ready.
-state: hidden
+state: visible
 version: "0.1"
