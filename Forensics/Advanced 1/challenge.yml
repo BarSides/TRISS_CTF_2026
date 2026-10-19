@@ -1,0 +1,32 @@
+# ctfcli challenge spec: https://github.com/CTFd/ctfcli
+name: "Committed"
+author: "@darius"
+attribution: "BarSides"
+category: "Forensics"
+description: |-
+  A colleague managed an internal server at our company. He had it set up so that employees could update the message of the day with their favorite quotes. We all enjoyed logging in each day and seeing what was new. Not too long ago, right after putting it up on GitHub, something got him spooked. He revoked all our access, and deleted the repo. Actually, he want as far as to delete his entire GitHub profile. Rumor has it someone leaked some sensitive information, but I sure didn't see evidence of that. Just quotes, years and years of quotes.
+value: 500
+type: standard
+
+flags:
+  - BarSides{Commitm3nt_issu3s}
+
+tags:
+  - intermediate
+
+files:
+  - files/open_motd.zip
+
+hints:
+  - content: "How can you see what's been done?"
+    cost: 0
+  - content: "What about attribution?"
+    cost: 50
+  - content: "Why would he needed to delete his GitHub profile?"
+    cost: 100
+
+requirements: []
+
+# Placeholders stay hidden. Set to visible when the challenge is ready.
+state: hidden
+version: "0.1"
