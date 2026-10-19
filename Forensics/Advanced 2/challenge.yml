@@ -1,0 +1,35 @@
+# ctfcli challenge spec: https://github.com/CTFd/ctfcli
+name: "What's in A NAME?"
+author: "DariusGasior"
+attribution: "BarSides"
+category: "Forensics"
+description: |-
+  OilRig is back at it. Looks like they've picked up a new trick. Can you find out what they stole?
+
+  Flag format: BarSides{...}
+value: 500
+type: standard
+
+flags:
+  - BarSides{c4n0nic4l_cr4mm1ng}
+
+
+tags:
+  - advanced
+  - pcap
+
+files:
+  - files/ZmxhZy50eHQg.pcap
+
+hints:
+  - content: "Look into what UNIT 42 had to say about ALMA Communicator"
+    cost: 0
+  - content: "What limitations do they face?"
+    cost: 50
+  - content: "How does CNAME work?"
+    cost: 100
+
+requirements: []
+
+state: visible
+version: "0.1"
