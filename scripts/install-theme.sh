@@ -24,11 +24,17 @@ event_host=${EVENT_HOST:-10.42.0.1}
 [ -f "$ctfd_dir/docker-compose.yml" ] || { echo "No docker-compose.yml in $ctfd_dir" >&2; exit 1; }
 
 echo "==> copy theme to $ctfd_dir/themes/barsides"
-mkdir -p "$ctfd_dir/themes"
-rm -rf "$ctfd_dir/themes/barsides.new"
-cp -r infra/ctfd-theme/barsides "$ctfd_dir/themes/barsides.new"
-rm -rf "$ctfd_dir/themes/barsides"
-mv "$ctfd_dir/themes/barsides.new" "$ctfd_dir/themes/barsides"
+# Refresh the folder in place: the running container's bind mount points at this directory,
+# so replacing it with a new one would leave CTFd serving an empty, deleted folder.
+mkdir -p "$ctfd_dir/themes/barsides"
+find "$ctfd_dir/themes/barsides" -mindepth 1 -delete
+cp -r infra/ctfd-theme/barsides/. "$ctfd_dir/themes/barsides/"
+
+# docker compose names the project after the folder unless told otherwise, so use the running
+# stack's own name; a second stack would open the live database directory.
+project=$(docker ps --filter "label=com.docker.compose.project.working_dir=$(cd "$ctfd_dir" && pwd)" \
+  --format '{{.Label "com.docker.compose.project"}}' 2>/dev/null | head -n1 || true)
+compose="docker compose ${project:+-p $project }-f $ctfd_dir/docker-compose.yml"
 
 mount='./themes/barsides:/opt/CTFd/CTFd/themes/barsides:ro'
 if ! grep -qF "$mount" "$ctfd_dir/docker-compose.yml"; then
@@ -41,14 +47,14 @@ $ctfd_dir/docker-compose.yml:
 
 then recreate the container (the database and uploads are untouched):
 
-  docker compose -f $ctfd_dir/docker-compose.yml up -d ctfd
+  $compose up -d ctfd
 
 and run this script again with --activate.
 EOF
   [ $activate = 1 ] || [ $index = 1 ] && exit 1
   exit 0
 fi
-echo "    already mounted in docker-compose.yml (after changing templates: docker compose -f $ctfd_dir/docker-compose.yml restart ctfd)"
+echo "    already mounted in docker-compose.yml (after changing templates: $compose restart ctfd)"
 
 [ $activate = 1 ] || [ $index = 1 ] || exit 0
 
