@@ -32,8 +32,10 @@ The script defaults to `~/Claude/ctfd` (pass another folder as an argument). CTF
 ```
 
 ```sh
-docker compose -f ~/Claude/ctfd/docker-compose.yml up -d ctfd
+docker compose -p triss-ctfd -f ~/Claude/ctfd/docker-compose.yml up -d ctfd
 ```
+
+Pass the running stack's project name with `-p` (`triss-ctfd` on the event laptop; the script prints the right command for you). Without it compose names the project after the folder and starts a second CTFd and database on the same data.
 
 `--activate` and `--index` talk to the CTFd API with ctfcli's `.ctf/config`, so run `ctf init` first. `--index` saves the current home page to `themes/index-backup-<time>.html` before replacing it, and fills `EVENT_HOST` in the links with `$EVENT_HOST` (default `10.42.0.1`). You can also switch themes by hand under Admin Panel → Config → Theme.
 
