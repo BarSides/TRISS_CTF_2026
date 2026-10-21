@@ -10,7 +10,7 @@ barsides/
   templates/components/navbar.html  core's top bar with the BarSides CTF badge
   static/barsides/barsides.css      the design tokens and every style change
   static/barsides/fonts/            C64 Pro, C64 Pro Mono (see below), IBM Plex Sans (SIL OFL)
-  static/barsides/img/              BarSides CTF badge, BarSides logo, favicon
+  static/barsides/img/              BarSides CTF badge and favicon
 index.html                          the home page content, for CTFd's "index" page
 screenshots/                        how it looks with this year's challenges loaded
 ```
