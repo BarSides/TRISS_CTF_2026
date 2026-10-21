@@ -93,3 +93,12 @@ scripts/install-ctfd.sh sync         # push later edits to challenges already in
 ```
 
 Hosted challenges set `connection_info` in `challenge.yml` to the address players use on the event network. Update it once the event server's IP or hostname is known.
+
+## CTFd theme
+
+`infra/ctfd-theme/barsides` is a BarSides-styled CTFd theme with every font and image bundled, plus a home page in `infra/ctfd-theme/index.html`. See [infra/ctfd-theme/README.md](infra/ctfd-theme/README.md).
+
+```sh
+scripts/install-theme.sh                        # copy it next to CTFd; prints the one docker-compose.yml line to add the first time
+scripts/install-theme.sh --activate --index     # switch CTFd to it and replace the home page (the old one is backed up)
+```
