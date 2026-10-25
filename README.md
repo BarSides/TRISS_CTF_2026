@@ -96,9 +96,9 @@ Hosted challenges set `connection_info` in `challenge.yml` to the address player
 
 ## CTFd theme
 
-`infra/ctfd-theme/barsides` is a BarSides-styled CTFd theme with every font and image bundled, plus a home page in `infra/ctfd-theme/index.html`. See [infra/ctfd-theme/README.md](infra/ctfd-theme/README.md).
+The BarSides CTFd theme and this year's home page now live in their own repo, [BarSides/CTFd_Theme](https://github.com/BarSides/CTFd_Theme), so later events can reuse them. Clone it next to this repo and run its installer from here, so it picks up this repo's ctfcli `.ctf/config`:
 
 ```sh
-scripts/install-theme.sh                        # copy it next to CTFd; prints the one docker-compose.yml line to add the first time
-scripts/install-theme.sh --activate --index     # switch CTFd to it and replace the home page (the old one is backed up)
+../CTFd_Theme/install-theme.sh                        # copy it next to CTFd; prints the one docker-compose.yml line to add the first time
+../CTFd_Theme/install-theme.sh --activate --index     # switch CTFd to it and replace the home page (the old one is backed up)
 ```
